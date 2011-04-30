@@ -36,6 +36,10 @@ class Command
     return self
   end
 
+  def -@
+    @cmd = "-#{@cmd}"
+  end
+
   def to_s
     s = "#{@cmd} #{@args.join(' ')}"
     if @redir_to then
@@ -57,10 +61,26 @@ module Commands
   end
 end
 
+class Bareword < Command
+  def initialize(m, args)
+    super(m.to_s, args)
+  end
+end
+
+module Barewords
+  def method_missing(m, *args)
+    return Bareword.new(m, args)
+  end
+end
+
 if __FILE__ == $0 then
   extend Commands
 
   cmd = cmd("ls", "-1") | cmd("grep", "foo") > "foo.txt"
   puts cmd.to_s
+
+  extend Barewords
+  puts ls -lh
+  puts((ls -lh) | (grep foo))
 end
 
