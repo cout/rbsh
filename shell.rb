@@ -38,6 +38,7 @@ class Command
 
   def -@
     @cmd = "-#{@cmd}"
+    return self
   end
 
   def to_s
@@ -81,6 +82,7 @@ if __FILE__ == $0 then
 
   extend Barewords
   puts ls -lh
-  puts((ls -lh) | (grep foo))
+  puts(ls -lh | (grep foo))
+  puts foo --help
 end
 
