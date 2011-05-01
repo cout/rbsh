@@ -793,14 +793,14 @@ module_eval(<<'.,.,', 'shell.racc', 56)
 
 module_eval(<<'.,.,', 'shell.racc', 57)
   def _reduce_31(val, _values, result)
-     result = Node::For.new(val[1], val[-2] val[-1]) 
+     result = Node::For.new(val[1], val[-2], val[-1]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'shell.racc', 58)
   def _reduce_32(val, _values, result)
-     result = Node::For.new(val[1], val[3], val[-2], val[-1] 
+     result = Node::For.new(val[1], val[3], val[-2], val[-1]) 
     result
   end
 .,.,

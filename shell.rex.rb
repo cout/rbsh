@@ -61,14 +61,14 @@ class ShellLexer < Racc::Parser
         when (text = ss.scan(/[A-Za-z][A-Za-z_]*=[A-Za-z][A-Za-z_]*/))
            @rex_tokens.push action { [:ASSIGNMENT_WORD, text] }
 
-        when (text = ss.scan(/{/))
-          ;
+        when (text = ss.scan(/xxxxxxxxx/))
+           @rex_tokens.push action { [:NAME, text] }
 
         when (text = ss.scan(/\n/))
            @rex_tokens.push action { [:NEWLINE] }
 
-        when (text = ss.scan(/{/))
-          ;
+        when (text = ss.scan(/xxxxxxxxx/))
+           @rex_tokens.push action { [:IO_NUMBER, text.to_i] }
 
         when (text = ss.scan(/\&\&/))
            @rex_tokens.push action { [:AND_IF] }

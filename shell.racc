@@ -55,8 +55,8 @@ term             : term separator and_or                { result = Node::Term.ne
                  |                and_or                { result = Node::Term.new(nil, nil, val[0]) }
                  ;
 for_clause       : For name linebreak                            do_group { result = Node::For.new(val[1], nil, val[-1]) }
-                 | For name linebreak in          sequential_sep do_group { result = Node::For.new(val[1], val[-2] val[-1]) }
-                 | For name linebreak in wordlist sequential_sep do_group { result = Node::For.new(val[1], val[3], val[-2], val[-1] }
+                 | For name linebreak in          sequential_sep do_group { result = Node::For.new(val[1], val[-2], val[-1]) }
+                 | For name linebreak in wordlist sequential_sep do_group { result = Node::For.new(val[1], val[3], val[-2], val[-1]) }
                  ;
 name             : NAME        /* Apply rule 5 */                     { result = Node::Name.new(val.first) }
                  ;

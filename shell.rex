@@ -11,9 +11,9 @@ rule
   {WHITESPACE}      # no action
   {WORD}            [ [:WORD, text] }
   {WORD}={WORD}     { [:ASSIGNMENT_WORD, text] }
-                    { [:NAME, text] }
+  xxxxxxxxx         { [:NAME, text] }
   {NEWLINE}         { [:NEWLINE] }
-                    { [:IO_NUMBER, text.to_i] }
+  xxxxxxxxx         { [:IO_NUMBER, text.to_i] }
   \&\&              { [:AND_IF] }
   \|\|              { [:OR_IF] }
   \;\;              { [:DSEMI] }

@@ -87,5 +87,10 @@ if __FILE__ == $0 then
   puts ls -lh
   puts(ls -lh | (grep foo))
   puts foo --help
+
+  p = ShellParser.new
+  p.parse_str <<-END
+    echo "hello"
+  END
 end
 
