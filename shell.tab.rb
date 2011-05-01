@@ -292,113 +292,113 @@ racc_goto_default = [
 
 racc_reduce_table = [
   0, 0, :racc_error,
-  2, 41, :_reduce_none,
-  1, 41, :_reduce_none,
-  3, 42, :_reduce_none,
-  1, 42, :_reduce_none,
-  1, 45, :_reduce_none,
-  4, 45, :_reduce_none,
-  4, 45, :_reduce_none,
-  1, 46, :_reduce_none,
-  2, 46, :_reduce_none,
-  1, 48, :_reduce_none,
-  4, 48, :_reduce_none,
-  1, 49, :_reduce_none,
-  1, 49, :_reduce_none,
-  2, 49, :_reduce_none,
-  1, 49, :_reduce_none,
-  1, 51, :_reduce_none,
-  1, 51, :_reduce_none,
-  1, 51, :_reduce_none,
-  1, 51, :_reduce_none,
-  1, 51, :_reduce_none,
-  1, 51, :_reduce_none,
-  1, 51, :_reduce_none,
-  3, 55, :_reduce_none,
-  1, 61, :_reduce_none,
-  2, 61, :_reduce_none,
-  2, 61, :_reduce_none,
-  3, 61, :_reduce_none,
-  3, 62, :_reduce_none,
-  1, 62, :_reduce_none,
-  4, 56, :_reduce_none,
-  6, 56, :_reduce_none,
-  7, 56, :_reduce_none,
-  1, 64, :_reduce_none,
+  2, 41, :_reduce_1,
+  1, 41, :_reduce_2,
+  3, 42, :_reduce_3,
+  1, 42, :_reduce_4,
+  1, 45, :_reduce_5,
+  4, 45, :_reduce_6,
+  4, 45, :_reduce_7,
+  1, 46, :_reduce_8,
+  2, 46, :_reduce_9,
+  1, 48, :_reduce_10,
+  4, 48, :_reduce_11,
+  1, 49, :_reduce_12,
+  1, 49, :_reduce_13,
+  2, 49, :_reduce_14,
+  1, 49, :_reduce_15,
+  1, 51, :_reduce_16,
+  1, 51, :_reduce_17,
+  1, 51, :_reduce_18,
+  1, 51, :_reduce_19,
+  1, 51, :_reduce_20,
+  1, 51, :_reduce_21,
+  1, 51, :_reduce_22,
+  3, 55, :_reduce_23,
+  1, 61, :_reduce_24,
+  2, 61, :_reduce_25,
+  2, 61, :_reduce_26,
+  3, 61, :_reduce_27,
+  3, 62, :_reduce_28,
+  1, 62, :_reduce_29,
+  4, 56, :_reduce_30,
+  6, 56, :_reduce_31,
+  7, 56, :_reduce_32,
+  1, 64, :_reduce_33,
   1, 66, :_reduce_none,
-  2, 68, :_reduce_none,
-  1, 68, :_reduce_none,
-  7, 57, :_reduce_none,
-  7, 57, :_reduce_none,
-  6, 57, :_reduce_none,
-  2, 70, :_reduce_none,
-  1, 70, :_reduce_none,
-  2, 69, :_reduce_none,
-  1, 69, :_reduce_none,
-  3, 71, :_reduce_none,
-  4, 71, :_reduce_none,
-  4, 71, :_reduce_none,
-  5, 71, :_reduce_none,
-  5, 72, :_reduce_none,
-  5, 72, :_reduce_none,
-  6, 72, :_reduce_none,
-  6, 72, :_reduce_none,
-  1, 73, :_reduce_none,
-  3, 73, :_reduce_none,
-  6, 58, :_reduce_none,
-  5, 58, :_reduce_none,
-  4, 74, :_reduce_none,
-  2, 74, :_reduce_none,
-  3, 59, :_reduce_none,
-  3, 60, :_reduce_none,
-  5, 53, :_reduce_none,
-  1, 76, :_reduce_none,
-  2, 76, :_reduce_none,
-  1, 75, :_reduce_none,
-  3, 54, :_reduce_none,
-  3, 65, :_reduce_none,
-  3, 50, :_reduce_none,
-  2, 50, :_reduce_none,
-  1, 50, :_reduce_none,
-  2, 50, :_reduce_none,
-  1, 50, :_reduce_none,
-  1, 80, :_reduce_none,
-  1, 78, :_reduce_none,
-  1, 77, :_reduce_none,
-  2, 77, :_reduce_none,
-  1, 77, :_reduce_none,
-  2, 77, :_reduce_none,
-  1, 79, :_reduce_none,
-  2, 79, :_reduce_none,
-  1, 79, :_reduce_none,
-  2, 79, :_reduce_none,
-  1, 52, :_reduce_none,
-  2, 52, :_reduce_none,
-  1, 81, :_reduce_none,
-  2, 81, :_reduce_none,
-  1, 81, :_reduce_none,
-  2, 81, :_reduce_none,
-  2, 82, :_reduce_none,
-  2, 82, :_reduce_none,
-  2, 82, :_reduce_none,
-  2, 82, :_reduce_none,
-  2, 82, :_reduce_none,
-  2, 82, :_reduce_none,
-  2, 82, :_reduce_none,
-  1, 84, :_reduce_none,
-  2, 83, :_reduce_none,
-  2, 83, :_reduce_none,
-  1, 85, :_reduce_none,
-  1, 63, :_reduce_none,
-  2, 63, :_reduce_none,
-  1, 47, :_reduce_none,
-  0, 47, :_reduce_none,
-  1, 44, :_reduce_none,
-  1, 44, :_reduce_none,
-  2, 43, :_reduce_none,
-  1, 43, :_reduce_none,
-  2, 67, :_reduce_none,
-  1, 67, :_reduce_none ]
+  2, 68, :_reduce_35,
+  1, 68, :_reduce_36,
+  7, 57, :_reduce_37,
+  7, 57, :_reduce_38,
+  6, 57, :_reduce_39,
+  2, 70, :_reduce_40,
+  1, 70, :_reduce_41,
+  2, 69, :_reduce_42,
+  1, 69, :_reduce_43,
+  3, 71, :_reduce_44,
+  4, 71, :_reduce_45,
+  4, 71, :_reduce_46,
+  5, 71, :_reduce_47,
+  5, 72, :_reduce_48,
+  5, 72, :_reduce_49,
+  6, 72, :_reduce_50,
+  6, 72, :_reduce_51,
+  1, 73, :_reduce_52,
+  3, 73, :_reduce_53,
+  6, 58, :_reduce_54,
+  5, 58, :_reduce_55,
+  4, 74, :_reduce_56,
+  2, 74, :_reduce_57,
+  3, 59, :_reduce_58,
+  3, 60, :_reduce_59,
+  5, 53, :_reduce_60,
+  1, 76, :_reduce_61,
+  2, 76, :_reduce_62,
+  1, 75, :_reduce_63,
+  3, 54, :_reduce_64,
+  3, 65, :_reduce_65,
+  3, 50, :_reduce_66,
+  2, 50, :_reduce_67,
+  1, 50, :_reduce_68,
+  2, 50, :_reduce_69,
+  1, 50, :_reduce_70,
+  1, 80, :_reduce_71,
+  1, 78, :_reduce_72,
+  1, 77, :_reduce_73,
+  2, 77, :_reduce_74,
+  1, 77, :_reduce_75,
+  2, 77, :_reduce_76,
+  1, 79, :_reduce_77,
+  2, 79, :_reduce_78,
+  1, 79, :_reduce_79,
+  2, 79, :_reduce_80,
+  1, 52, :_reduce_81,
+  2, 52, :_reduce_82,
+  1, 81, :_reduce_83,
+  2, 81, :_reduce_84,
+  1, 81, :_reduce_85,
+  2, 81, :_reduce_86,
+  2, 82, :_reduce_87,
+  2, 82, :_reduce_88,
+  2, 82, :_reduce_89,
+  2, 82, :_reduce_90,
+  2, 82, :_reduce_91,
+  2, 82, :_reduce_92,
+  2, 82, :_reduce_93,
+  1, 84, :_reduce_94,
+  2, 83, :_reduce_95,
+  2, 83, :_reduce_96,
+  1, 85, :_reduce_97,
+  1, 63, :_reduce_98,
+  2, 63, :_reduce_99,
+  1, 47, :_reduce_100,
+  0, 47, :_reduce_101,
+  1, 44, :_reduce_102,
+  1, 44, :_reduce_103,
+  2, 43, :_reduce_104,
+  1, 43, :_reduce_105,
+  2, 67, :_reduce_106,
+  1, 67, :_reduce_107 ]
 
 racc_reduce_n = 108
 
@@ -560,219 +560,749 @@ Racc_debug_parser = true
 
 # reduce 0 omitted
 
-# reduce 1 omitted
+module_eval(<<'.,.,', 'shell.racc', 17)
+  def _reduce_1(val, _values, result)
+     result = Node::CompleteCommand.new(val.first, val.last) 
+    result
+  end
+.,.,
 
-# reduce 2 omitted
+module_eval(<<'.,.,', 'shell.racc', 18)
+  def _reduce_2(val, _values, result)
+     result = Node::CompleteCommand.new(val.first, nil) 
+    result
+  end
+.,.,
 
-# reduce 3 omitted
+module_eval(<<'.,.,', 'shell.racc', 20)
+  def _reduce_3(val, _values, result)
+     result = Node::List.new(val[0], val[1], val[2]) 
+    result
+  end
+.,.,
 
-# reduce 4 omitted
+module_eval(<<'.,.,', 'shell.racc', 21)
+  def _reduce_4(val, _values, result)
+     result = Node::List.new(nil, nil, val.last) 
+    result
+  end
+.,.,
 
-# reduce 5 omitted
+module_eval(<<'.,.,', 'shell.racc', 23)
+  def _reduce_5(val, _values, result)
+     result = Node::AndOr.new(nil, nil, val.last) 
+    result
+  end
+.,.,
 
-# reduce 6 omitted
+module_eval(<<'.,.,', 'shell.racc', 24)
+  def _reduce_6(val, _values, result)
+     result = Node::AndOr.new(val[0], val[2], val[3]) 
+    result
+  end
+.,.,
 
-# reduce 7 omitted
+module_eval(<<'.,.,', 'shell.racc', 25)
+  def _reduce_7(val, _values, result)
+     result = Node::AndOr.new(val[0], val[2], val[3]) 
+    result
+  end
+.,.,
 
-# reduce 8 omitted
+module_eval(<<'.,.,', 'shell.racc', 27)
+  def _reduce_8(val, _values, result)
+     result = Node::Pipeline.new(val.last) 
+    result
+  end
+.,.,
 
-# reduce 9 omitted
+module_eval(<<'.,.,', 'shell.racc', 28)
+  def _reduce_9(val, _values, result)
+     result = Node::Pipeline.new(val.last) 
+    result
+  end
+.,.,
 
-# reduce 10 omitted
+module_eval(<<'.,.,', 'shell.racc', 30)
+  def _reduce_10(val, _values, result)
+     result = Node::PipeSequence.new(nil, val.last) 
+    result
+  end
+.,.,
 
-# reduce 11 omitted
+module_eval(<<'.,.,', 'shell.racc', 31)
+  def _reduce_11(val, _values, result)
+     result = Node::PipeSequence.new(val.first, val.last) 
+    result
+  end
+.,.,
 
-# reduce 12 omitted
+module_eval(<<'.,.,', 'shell.racc', 33)
+  def _reduce_12(val, _values, result)
+     result = Node::Command.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 13 omitted
+module_eval(<<'.,.,', 'shell.racc', 34)
+  def _reduce_13(val, _values, result)
+     result = Node::Command.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 14 omitted
+module_eval(<<'.,.,', 'shell.racc', 35)
+  def _reduce_14(val, _values, result)
+     result = Node::Command.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 15 omitted
+module_eval(<<'.,.,', 'shell.racc', 36)
+  def _reduce_15(val, _values, result)
+     result = Node::Command.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 16 omitted
+module_eval(<<'.,.,', 'shell.racc', 38)
+  def _reduce_16(val, _values, result)
+     result = Node::CompoundCommand.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 17 omitted
+module_eval(<<'.,.,', 'shell.racc', 39)
+  def _reduce_17(val, _values, result)
+     result = Node::CompoundCommand.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 18 omitted
+module_eval(<<'.,.,', 'shell.racc', 40)
+  def _reduce_18(val, _values, result)
+     result = Node::CompoundCommand.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 19 omitted
+module_eval(<<'.,.,', 'shell.racc', 41)
+  def _reduce_19(val, _values, result)
+     result = Node::CompoundCommand.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 20 omitted
+module_eval(<<'.,.,', 'shell.racc', 42)
+  def _reduce_20(val, _values, result)
+     result = Node::CompoundCommand.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 21 omitted
+module_eval(<<'.,.,', 'shell.racc', 43)
+  def _reduce_21(val, _values, result)
+     result = Node::CompoundCommand.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 22 omitted
+module_eval(<<'.,.,', 'shell.racc', 44)
+  def _reduce_22(val, _values, result)
+     result = Node::CompoundCommand.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 23 omitted
+module_eval(<<'.,.,', 'shell.racc', 46)
+  def _reduce_23(val, _values, result)
+     result = Node::Subshell.new(val.first) 
+    result
+  end
+.,.,
 
-# reduce 24 omitted
+module_eval(<<'.,.,', 'shell.racc', 48)
+  def _reduce_24(val, _values, result)
+     result = Node::CompoundList.new(nil, val[1], nil) 
+    result
+  end
+.,.,
 
-# reduce 25 omitted
+module_eval(<<'.,.,', 'shell.racc', 49)
+  def _reduce_25(val, _values, result)
+     result = Node::CompoundList.new(val[0], val[1], nil) 
+    result
+  end
+.,.,
 
-# reduce 26 omitted
+module_eval(<<'.,.,', 'shell.racc', 50)
+  def _reduce_26(val, _values, result)
+     result = Node::CompoundList.new(nil, val[1], val[2]) 
+    result
+  end
+.,.,
 
-# reduce 27 omitted
+module_eval(<<'.,.,', 'shell.racc', 51)
+  def _reduce_27(val, _values, result)
+     result = Node::CompoundList.new(val[0], val[1], val[2]) 
+    result
+  end
+.,.,
 
-# reduce 28 omitted
+module_eval(<<'.,.,', 'shell.racc', 53)
+  def _reduce_28(val, _values, result)
+     result = Node::Term.new(val[0], val[1], val[2]) 
+    result
+  end
+.,.,
 
-# reduce 29 omitted
+module_eval(<<'.,.,', 'shell.racc', 54)
+  def _reduce_29(val, _values, result)
+     result = Node::Term.new(nil, nil, val[0]) 
+    result
+  end
+.,.,
 
-# reduce 30 omitted
+module_eval(<<'.,.,', 'shell.racc', 56)
+  def _reduce_30(val, _values, result)
+     result = Node::For.new(val[1], nil, val[-1]) 
+    result
+  end
+.,.,
 
-# reduce 31 omitted
+module_eval(<<'.,.,', 'shell.racc', 57)
+  def _reduce_31(val, _values, result)
+     result = Node::For.new(val[1], val[-2] val[-1]) 
+    result
+  end
+.,.,
 
-# reduce 32 omitted
+module_eval(<<'.,.,', 'shell.racc', 58)
+  def _reduce_32(val, _values, result)
+     result = Node::For.new(val[1], val[3], val[-2], val[-1] 
+    result
+  end
+.,.,
 
-# reduce 33 omitted
+module_eval(<<'.,.,', 'shell.racc', 60)
+  def _reduce_33(val, _values, result)
+     result = Node::Name.new(val.first) 
+    result
+  end
+.,.,
 
 # reduce 34 omitted
 
-# reduce 35 omitted
-
-# reduce 36 omitted
-
-# reduce 37 omitted
-
-# reduce 38 omitted
-
-# reduce 39 omitted
-
-# reduce 40 omitted
-
-# reduce 41 omitted
-
-# reduce 42 omitted
-
-# reduce 43 omitted
-
-# reduce 44 omitted
-
-# reduce 45 omitted
-
-# reduce 46 omitted
-
-# reduce 47 omitted
-
-# reduce 48 omitted
-
-# reduce 49 omitted
-
-# reduce 50 omitted
-
-# reduce 51 omitted
-
-# reduce 52 omitted
-
-# reduce 53 omitted
-
-# reduce 54 omitted
-
-# reduce 55 omitted
-
-# reduce 56 omitted
-
-# reduce 57 omitted
-
-# reduce 58 omitted
-
-# reduce 59 omitted
-
-# reduce 60 omitted
-
-# reduce 61 omitted
-
-# reduce 62 omitted
-
-# reduce 63 omitted
-
-# reduce 64 omitted
-
-# reduce 65 omitted
-
-# reduce 66 omitted
-
-# reduce 67 omitted
-
-# reduce 68 omitted
-
-# reduce 69 omitted
-
-# reduce 70 omitted
-
-# reduce 71 omitted
-
-# reduce 72 omitted
-
-# reduce 73 omitted
-
-# reduce 74 omitted
-
-# reduce 75 omitted
-
-# reduce 76 omitted
-
-# reduce 77 omitted
-
-# reduce 78 omitted
-
-# reduce 79 omitted
-
-# reduce 80 omitted
-
-# reduce 81 omitted
-
-# reduce 82 omitted
-
-# reduce 83 omitted
-
-# reduce 84 omitted
-
-# reduce 85 omitted
-
-# reduce 86 omitted
-
-# reduce 87 omitted
-
-# reduce 88 omitted
-
-# reduce 89 omitted
-
-# reduce 90 omitted
-
-# reduce 91 omitted
-
-# reduce 92 omitted
-
-# reduce 93 omitted
-
-# reduce 94 omitted
-
-# reduce 95 omitted
-
-# reduce 96 omitted
-
-# reduce 97 omitted
-
-# reduce 98 omitted
-
-# reduce 99 omitted
-
-# reduce 100 omitted
-
-# reduce 101 omitted
-
-# reduce 102 omitted
-
-# reduce 103 omitted
-
-# reduce 104 omitted
-
-# reduce 105 omitted
-
-# reduce 106 omitted
-
-# reduce 107 omitted
+module_eval(<<'.,.,', 'shell.racc', 64)
+  def _reduce_35(val, _values, result)
+     result = Node::Wordlist.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 65)
+  def _reduce_36(val, _values, result)
+     result = Node::Wordlist.new(nil, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 67)
+  def _reduce_37(val, _values, result)
+     result = Node::CaseClause.new(val[1], val[-1]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 68)
+  def _reduce_38(val, _values, result)
+     result = Node::CaseClause.new(val[1], val[-1]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 69)
+  def _reduce_39(val, _values, result)
+     result = Node::CaseClause.new(val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 71)
+  def _reduce_40(val, _values, result)
+     result = Node::CaseListNs.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 72)
+  def _reduce_41(val, _values, result)
+     result = Node::CaseListNs.new(nil, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 74)
+  def _reduce_42(val, _values, result)
+     result = Node::CaseList.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 75)
+  def _reduce_43(val, _values, result)
+     result = Node::CaseList.new(nil, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 77)
+  def _reduce_44(val, _values, result)
+     result = Node::CaseItemNs.new(val[0], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 78)
+  def _reduce_45(val, _values, result)
+     result = Node::CaseItemNs.new(val[0], val[2]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 79)
+  def _reduce_46(val, _values, result)
+     result = Node::CaseItemNs.new(val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 80)
+  def _reduce_47(val, _values, result)
+     result = Node::CaseItemNs.new(val[1], val[3]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 82)
+  def _reduce_48(val, _values, result)
+     result = Node::CaseItem.new(val[0], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 83)
+  def _reduce_49(val, _values, result)
+     result = Node::CaseItem.new(val[0], val[2]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 84)
+  def _reduce_50(val, _values, result)
+     result = Node::CaseItem.new(val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 85)
+  def _reduce_51(val, _values, result)
+     result = Node::CaseItem.new(val[1], val[3]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 87)
+  def _reduce_52(val, _values, result)
+     result = Node::Pattern.new(nil, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 88)
+  def _reduce_53(val, _values, result)
+     result = Node::Pattern.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 90)
+  def _reduce_54(val, _values, result)
+     result = Node::IfClause.new(val[1], val[3], val[4]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 91)
+  def _reduce_55(val, _values, result)
+     result = Node::IfClause.new(val[1], val[3], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 93)
+  def _reduce_56(val, _values, result)
+     result = Node::ElsePart.new(val[1], val[-1]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 94)
+  def _reduce_57(val, _values, result)
+     result = Node::ElsePart.new(val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 96)
+  def _reduce_58(val, _values, result)
+     result = Node::WhileClause.new(val[1]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 98)
+  def _reduce_59(val, _values, result)
+     result = Node::UntilClause.new(val[1]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 100)
+  def _reduce_60(val, _values, result)
+     result = Node::FunctionDefinition.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 102)
+  def _reduce_61(val, _values, result)
+     result = Node::FunctionBody.new(val.first, nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 103)
+  def _reduce_62(val, _values, result)
+     result = Node::FunctionBody.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 105)
+  def _reduce_63(val, _values, result)
+     result = Node::Fname.new(val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 107)
+  def _reduce_64(val, _values, result)
+     result = Node::BraceGroup.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 109)
+  def _reduce_65(val, _values, result)
+     result = Node::DoGroup.new(val[1]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 111)
+  def _reduce_66(val, _values, result)
+     result = Node::SimpleCommand.new(val[0], val[1], val[2]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 112)
+  def _reduce_67(val, _values, result)
+     result = Node::SimpleCommand.new(val[0], val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 113)
+  def _reduce_68(val, _values, result)
+     result = Node::SimpleCommand.new(val[0], nil, nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 114)
+  def _reduce_69(val, _values, result)
+     result = Node::SimpleCommand.new(nil, val[1], val[2]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 115)
+  def _reduce_70(val, _values, result)
+     result = Node::SimpleCommand.new(nil, val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 117)
+  def _reduce_71(val, _values, result)
+     result = Node::CmdName.new(val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 119)
+  def _reduce_72(val, _values, result)
+     result = Node::CmdWord.new(val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 121)
+  def _reduce_73(val, _values, result)
+     result = Node::CmdPrefix.new(nil, val[0], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 122)
+  def _reduce_74(val, _values, result)
+     result = Node::CmdPrefix.new(val[0], val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 123)
+  def _reduce_75(val, _values, result)
+     result = Node::CmdPrefix.new(nil, nil, val[0]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 124)
+  def _reduce_76(val, _values, result)
+     result = Node::CmdPrefix.new(val[0], nil, val[1]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 126)
+  def _reduce_77(val, _values, result)
+     result = Node::CmdSuffix.new(nil, val[0], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 127)
+  def _reduce_78(val, _values, result)
+     result = Node::CmdSuffix.new(val[0], val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 128)
+  def _reduce_79(val, _values, result)
+     result = Node::CmdSuffix.new(nil, nil, val[0]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 129)
+  def _reduce_80(val, _values, result)
+     result = Node::CmdSuffix.new(val[0], nil, val[1]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 131)
+  def _reduce_81(val, _values, result)
+     result = Node::RedirectList.new(nil, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 132)
+  def _reduce_82(val, _values, result)
+     result = Node::RedirectList.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 134)
+  def _reduce_83(val, _values, result)
+     result = Node::IoRedirect.new(nil, val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 135)
+  def _reduce_84(val, _values, result)
+     result = Node::IoRedirect.new(val[0], val[1], nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 136)
+  def _reduce_85(val, _values, result)
+     result = Node::IoRedirect.new(nil, nil, val[2]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 137)
+  def _reduce_86(val, _values, result)
+     result = Node::IoRedirect.new(val[0], nil, val[2]) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 139)
+  def _reduce_87(val, _values, result)
+     result = Node::IoFile.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 140)
+  def _reduce_88(val, _values, result)
+     result = Node::IoFile.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 141)
+  def _reduce_89(val, _values, result)
+     result = Node::IoFile.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 142)
+  def _reduce_90(val, _values, result)
+     result = Node::IoFile.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 143)
+  def _reduce_91(val, _values, result)
+     result = Node::IoFile.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 144)
+  def _reduce_92(val, _values, result)
+     result = Node::IoFile.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 145)
+  def _reduce_93(val, _values, result)
+     result = Node::IoFile.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 147)
+  def _reduce_94(val, _values, result)
+     result = Node::Filename.new(val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 149)
+  def _reduce_95(val, _values, result)
+     result = Node::IoHere.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 150)
+  def _reduce_96(val, _values, result)
+     result = Node::IoHere.new(val.first, val.last) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 152)
+  def _reduce_97(val, _values, result)
+     result = Node::HereEnd.new(val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 154)
+  def _reduce_98(val, _values, result)
+     result = Node::NewlineList.new(nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 155)
+  def _reduce_99(val, _values, result)
+     result = Node::NewlineList.new(val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 157)
+  def _reduce_100(val, _values, result)
+     result = Node::Linebreak.new(val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 158)
+  def _reduce_101(val, _values, result)
+     result = Node::Linebreak.new(nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 160)
+  def _reduce_102(val, _values, result)
+     result = Node::SeparatorOp.new(val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 161)
+  def _reduce_103(val, _values, result)
+     result = Node::SeparatorOp.new(val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 163)
+  def _reduce_104(val, _values, result)
+     result = Node::Separator.new(val.first, nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 164)
+  def _reduce_105(val, _values, result)
+     result = Node::Separator.new(nil, val.first) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 166)
+  def _reduce_106(val, _values, result)
+     result = Node::SequentialSep.new(nil) 
+    result
+  end
+.,.,
+
+module_eval(<<'.,.,', 'shell.racc', 167)
+  def _reduce_107(val, _values, result)
+     result = Node::SequentialSep.new(val.first) 
+    result
+  end
+.,.,
 
 def _reduce_none(val, _values, result)
   val[0]

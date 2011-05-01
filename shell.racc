@@ -15,157 +15,157 @@ token  In
 
 rule
 
-complete_command : list separator
-                 | list
+complete_command : list separator                       { result = Node::CompleteCommand.new(val.first, val.last) }
+                 | list                                 { result = Node::CompleteCommand.new(val.first, nil) }
                  ;
-list             : list separator_op and_or
-                 |                   and_or
+list             : list separator_op and_or             { result = Node::List.new(val[0], val[1], val[2]) }
+                 |                   and_or             { result = Node::List.new(nil, nil, val.last) }
                  ;
-and_or           :                         pipeline
-                 | and_or AND_IF linebreak pipeline
-                 | and_or OR_IF  linebreak pipeline
+and_or           :                         pipeline     { result = Node::AndOr.new(nil, nil, val.last) }
+                 | and_or AND_IF linebreak pipeline     { result = Node::AndOr.new(val[0], val[2], val[3]) }
+                 | and_or OR_IF  linebreak pipeline     { result = Node::AndOr.new(val[0], val[2], val[3]) }
                  ;
-pipeline         :      pipe_sequence
-                 | Bang pipe_sequence
+pipeline         :      pipe_sequence                   { result = Node::Pipeline.new(val.last) }
+                 | Bang pipe_sequence                   { result = Node::Pipeline.new(val.last) }
                  ;
-pipe_sequence    :                             command
-                 | pipe_sequence '|' linebreak command
+pipe_sequence    :                             command  { result = Node::PipeSequence.new(nil, val.last) }
+                 | pipe_sequence '|' linebreak command  { result = Node::PipeSequence.new(val.first, val.last) }
                  ;
-command          : simple_command
-                 | compound_command
-                 | compound_command redirect_list
-                 | function_definition
+command          : simple_command                       { result = Node::Command.new(val.first) }
+                 | compound_command                     { result = Node::Command.new(val.first) }
+                 | compound_command redirect_list       { result = Node::Command.new(val.first) }
+                 | function_definition                  { result = Node::Command.new(val.first) }
                  ;
-compound_command : brace_group
-                 | subshell
-                 | for_clause
-                 | case_clause
-                 | if_clause
-                 | while_clause
-                 | until_clause
+compound_command : brace_group                          { result = Node::CompoundCommand.new(val.first) }
+                 | subshell                             { result = Node::CompoundCommand.new(val.first) }
+                 | for_clause                           { result = Node::CompoundCommand.new(val.first) }
+                 | case_clause                          { result = Node::CompoundCommand.new(val.first) }
+                 | if_clause                            { result = Node::CompoundCommand.new(val.first) }
+                 | while_clause                         { result = Node::CompoundCommand.new(val.first) }
+                 | until_clause                         { result = Node::CompoundCommand.new(val.first) }
                  ;
-subshell         : '(' compound_list ')'
+subshell         : '(' compound_list ')'                { result = Node::Subshell.new(val.first) }
                  ;
-compound_list    :              term
-                 | newline_list term
-                 |              term separator
-                 | newline_list term separator
+compound_list    :              term                    { result = Node::CompoundList.new(nil, val[1], nil) }
+                 | newline_list term                    { result = Node::CompoundList.new(val[0], val[1], nil) }
+                 |              term separator          { result = Node::CompoundList.new(nil, val[1], val[2]) }
+                 | newline_list term separator          { result = Node::CompoundList.new(val[0], val[1], val[2]) }
                  ;
-term             : term separator and_or
-                 |                and_or
+term             : term separator and_or                { result = Node::Term.new(val[0], val[1], val[2]) }
+                 |                and_or                { result = Node::Term.new(nil, nil, val[0]) }
                  ;
-for_clause       : For name linebreak                            do_group
-                 | For name linebreak in          sequential_sep do_group
-                 | For name linebreak in wordlist sequential_sep do_group
+for_clause       : For name linebreak                            do_group { result = Node::For.new(val[1], nil, val[-1]) }
+                 | For name linebreak in          sequential_sep do_group { result = Node::For.new(val[1], val[-2] val[-1]) }
+                 | For name linebreak in wordlist sequential_sep do_group { result = Node::For.new(val[1], val[3], val[-2], val[-1] }
                  ;
-name             : NAME                     /* Apply rule 5 */
+name             : NAME        /* Apply rule 5 */       { result = Node::Name.new(val.first) }
                  ;
-in               : In                       /* Apply rule 6 */
+in               : In          /* Apply rule 6 */
                  ;
-wordlist         : wordlist WORD
-                 |          WORD
+wordlist         : wordlist WORD                        { result = Node::Wordlist.new(val.first, val.last) }
+                 |          WORD                        { result = Node::Wordlist.new(nil, val.last) }
                  ;
-case_clause      : Case WORD linebreak in linebreak case_list    Esac
-                 | Case WORD linebreak in linebreak case_list_ns Esac
-                 | Case WORD linebreak in linebreak              Esac
+case_clause      : Case WORD linebreak in linebreak case_list    Esac { result = Node::CaseClause.new(val[1], val[-1]) }
+                 | Case WORD linebreak in linebreak case_list_ns Esac { result = Node::CaseClause.new(val[1], val[-1]) }
+                 | Case WORD linebreak in linebreak              Esac { result = Node::CaseClause.new(val[1], nil) }
                  ;
-case_list_ns     : case_list case_item_ns
-                 |           case_item_ns
+case_list_ns     : case_list case_item_ns               { result = Node::CaseListNs.new(val.first, val.last) }
+                 |           case_item_ns               { result = Node::CaseListNs.new(nil, val.last) }
                  ;
-case_list        : case_list case_item
-                 |           case_item
+case_list        : case_list case_item                  { result = Node::CaseList.new(val.first, val.last) }
+                 |           case_item                  { result = Node::CaseList.new(nil, val.last) }
                  ;
-case_item_ns     :     pattern ')'               linebreak
-                 |     pattern ')' compound_list linebreak
-                 | '(' pattern ')'               linebreak
-                 | '(' pattern ')' compound_list linebreak
+case_item_ns     :     pattern ')'               linebreak  { result = Node::CaseItemNs.new(val[0], nil) }
+                 |     pattern ')' compound_list linebreak  { result = Node::CaseItemNs.new(val[0], val[2]) }
+                 | '(' pattern ')'               linebreak  { result = Node::CaseItemNs.new(val[1], nil) }
+                 | '(' pattern ')' compound_list linebreak  { result = Node::CaseItemNs.new(val[1], val[3]) }
                  ;
-case_item        :     pattern ')' linebreak     DSEMI linebreak
-                 |     pattern ')' compound_list DSEMI linebreak
-                 | '(' pattern ')' linebreak     DSEMI linebreak
-                 | '(' pattern ')' compound_list DSEMI linebreak
+case_item        :     pattern ')' linebreak     DSEMI linebreak  { result = Node::CaseItem.new(val[0], nil) }
+                 |     pattern ')' compound_list DSEMI linebreak  { result = Node::CaseItem.new(val[0], val[2]) }
+                 | '(' pattern ')' linebreak     DSEMI linebreak  { result = Node::CaseItem.new(val[1], nil) }
+                 | '(' pattern ')' compound_list DSEMI linebreak  { result = Node::CaseItem.new(val[1], val[3]) }
                  ;
-pattern          :             WORD         /* Apply rule 4 */
-                 | pattern '|' WORD         /* Do not apply rule 4 */
+pattern          :             WORD  /* Apply rule 4 */           { result = Node::Pattern.new(nil, val.last) }
+                 | pattern '|' WORD  /* Do not apply rule 4 */    { result = Node::Pattern.new(val.first, val.last) }
                  ;
-if_clause        : If compound_list Then compound_list else_part Fi
-                 | If compound_list Then compound_list           Fi
+if_clause        : If compound_list Then compound_list else_part Fi { result = Node::IfClause.new(val[1], val[3], val[4]) }
+                 | If compound_list Then compound_list           Fi { result = Node::IfClause.new(val[1], val[3], nil) }
                  ;
-else_part        : Elif compound_list Then else_part
-                 | Else compound_list
+else_part        : Elif compound_list Then else_part                { result = Node::ElsePart.new(val[1], val[-1]) }
+                 | Else compound_list                               { result = Node::ElsePart.new(val[1], nil) }
                  ;
-while_clause     : While compound_list do_group
+while_clause     : While compound_list do_group                     { result = Node::WhileClause.new(val[1]) }
                  ;
-until_clause     : Until compound_list do_group
+until_clause     : Until compound_list do_group                     { result = Node::UntilClause.new(val[1]) }
                  ;
-function_definition : fname '(' ')' linebreak function_body
+function_definition : fname '(' ')' linebreak function_body         { result = Node::FunctionDefinition.new(val.first, val.last) }
                  ;
-function_body    : compound_command                /* Apply rule 9 */
-                 | compound_command redirect_list  /* Apply rule 9 */
+function_body    : compound_command                /* Apply rule 9 */ { result = Node::FunctionBody.new(val.first, nil) }
+                 | compound_command redirect_list  /* Apply rule 9 */ { result = Node::FunctionBody.new(val.first, val.last) }
                  ;
-fname            : NAME                            /* Apply rule 8 */
+fname            : NAME                            /* Apply rule 8 */ { result = Node::Fname.new(val.first) }
                  ;
-brace_group      : Lbrace compound_list Rbrace
+brace_group      : Lbrace compound_list Rbrace                        { result = Node::BraceGroup.new(val.first, val.last) }
                  ;
-do_group         : Do compound_list Done           /* Apply rule 6 */
+do_group         : Do compound_list Done           /* Apply rule 6 */ { result = Node::DoGroup.new(val[1]) }
                  ;
-simple_command   : cmd_prefix cmd_word cmd_suffix
-                 | cmd_prefix cmd_word
-                 | cmd_prefix
-                 | cmd_name cmd_suffix
-                 | cmd_name
+simple_command   : cmd_prefix cmd_word cmd_suffix  { result = Node::SimpleCommand.new(val[0], val[1], val[2]) }
+                 | cmd_prefix cmd_word             { result = Node::SimpleCommand.new(val[0], val[1], nil) }
+                 | cmd_prefix                      { result = Node::SimpleCommand.new(val[0], nil, nil) }
+                 | cmd_name cmd_suffix             { result = Node::SimpleCommand.new(nil, val[1], val[2]) }
+                 | cmd_name                        { result = Node::SimpleCommand.new(nil, val[1], nil) }
                  ;
-cmd_name         : WORD                   /* Apply rule 7a */
+cmd_name         : WORD    /* Apply rule 7a */     { result = Node::CmdName.new(val.first) }
                  ;
-cmd_word         : WORD                   /* Apply rule 7b */
+cmd_word         : WORD    /* Apply rule 7b */     { result = Node::CmdWord.new(val.first) }
                  ;
-cmd_prefix       :            io_redirect
-                 | cmd_prefix io_redirect
-                 |            ASSIGNMENT_WORD
-                 | cmd_prefix ASSIGNMENT_WORD
+cmd_prefix       :            io_redirect          { result = Node::CmdPrefix.new(nil, val[0], nil) }
+                 | cmd_prefix io_redirect          { result = Node::CmdPrefix.new(val[0], val[1], nil) }
+                 |            ASSIGNMENT_WORD      { result = Node::CmdPrefix.new(nil, nil, val[0]) }
+                 | cmd_prefix ASSIGNMENT_WORD      { result = Node::CmdPrefix.new(val[0], nil, val[1]) }
                  ;
-cmd_suffix       :            io_redirect
-                 | cmd_suffix io_redirect
-                 |            WORD
-                 | cmd_suffix WORD
+cmd_suffix       :            io_redirect          { result = Node::CmdSuffix.new(nil, val[0], nil) }
+                 | cmd_suffix io_redirect          { result = Node::CmdSuffix.new(val[0], val[1], nil) }
+                 |            WORD                 { result = Node::CmdSuffix.new(nil, nil, val[0]) }
+                 | cmd_suffix WORD                 { result = Node::CmdSuffix.new(val[0], nil, val[1]) }
                  ;
-redirect_list    :               io_redirect
-                 | redirect_list io_redirect
+redirect_list    :               io_redirect       { result = Node::RedirectList.new(nil, val.last) }
+                 | redirect_list io_redirect       { result = Node::RedirectList.new(val.first, val.last) }
                  ;
-io_redirect      :           io_file
-                 | IO_NUMBER io_file
-                 |           io_here
-                 | IO_NUMBER io_here
+io_redirect      :           io_file               { result = Node::IoRedirect.new(nil, val[1], nil) }
+                 | IO_NUMBER io_file               { result = Node::IoRedirect.new(val[0], val[1], nil) }
+                 |           io_here               { result = Node::IoRedirect.new(nil, nil, val[2]) }
+                 | IO_NUMBER io_here               { result = Node::IoRedirect.new(val[0], nil, val[2]) }
                  ;
-io_file          : '<'       filename
-                 | LESSAND   filename
-                 | '>'       filename
-                 | GREATAND  filename
-                 | DGREAT    filename
-                 | LESSGREAT filename
-                 | CLOBBER   filename
+io_file          : '<'       filename              { result = Node::IoFile.new(val.first, val.last) }
+                 | LESSAND   filename              { result = Node::IoFile.new(val.first, val.last) }
+                 | '>'       filename              { result = Node::IoFile.new(val.first, val.last) }
+                 | GREATAND  filename              { result = Node::IoFile.new(val.first, val.last) }
+                 | DGREAT    filename              { result = Node::IoFile.new(val.first, val.last) }
+                 | LESSGREAT filename              { result = Node::IoFile.new(val.first, val.last) }
+                 | CLOBBER   filename              { result = Node::IoFile.new(val.first, val.last) }
                  ;
-filename         : WORD                      /* Apply rule 2 */
+filename         : WORD      /* Apply rule 2 */    { result = Node::Filename.new(val.first) }
                  ;
-io_here          : DLESS     here_end
-                 | DLESSDASH here_end
+io_here          : DLESS     here_end              { result = Node::IoHere.new(val.first, val.last) }
+                 | DLESSDASH here_end              { result = Node::IoHere.new(val.first, val.last) }
                  ;
-here_end         : WORD                      /* Apply rule 3 */
+here_end         : WORD      /* Apply rule 3 */    { result = Node::HereEnd.new(val.first) }
                  ;
-newline_list     :              NEWLINE
-                 | newline_list NEWLINE
+newline_list     :              NEWLINE            { result = Node::NewlineList.new(nil) }
+                 | newline_list NEWLINE            { result = Node::NewlineList.new(val.first) }
                  ;
-linebreak        : newline_list
-                 | /* empty */
+linebreak        : newline_list                    { result = Node::Linebreak.new(val.first) }
+                 | /* empty */                     { result = Node::Linebreak.new(nil) }
                  ;
-separator_op     : '&'
-                 | ';'
+separator_op     : '&'                             { result = Node::SeparatorOp.new(val.first) }
+                 | ';'                             { result = Node::SeparatorOp.new(val.first) }
                  ;
-separator        : separator_op linebreak
-                 | newline_list
+separator        : separator_op linebreak          { result = Node::Separator.new(val.first, nil) }
+                 | newline_list                    { result = Node::Separator.new(nil, val.first) }
                  ;
-sequential_sep   : ';' linebreak
-                 | newline_list
+sequential_sep   : ';' linebreak                   { result = Node::SequentialSep.new(nil) }
+                 | newline_list                    { result = Node::SequentialSep.new(val.first) }
                  ;
 
 # vim:set ft=racc:
