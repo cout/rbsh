@@ -1,4 +1,18 @@
 class ShellParser
+
+token  WORD
+token  ASSIGNMENT_WORD
+token  NAME
+token  NEWLINE
+token  IO_NUMBER
+token  AND_IF    OR_IF    DSEMI
+token  DLESS  DGREAT  LESSAND  GREATAND  LESSGREAT  DLESSDASH
+token  CLOBBER
+token  If    Then    Else    Elif    Fi    Do    Done
+token  Case    Esac    While    Until    For
+token  Lbrace    Rbrace    Bang
+token  In
+
 rule
 
 complete_command : list separator
@@ -154,3 +168,4 @@ sequential_sep   : ';' linebreak
                  | newline_list
                  ;
 
+# vim:set ft=racc:
