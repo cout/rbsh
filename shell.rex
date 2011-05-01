@@ -1,4 +1,4 @@
-class ShellLexer
+class ShellParser
 
 macro
   WHITESPACE        \s+
@@ -9,7 +9,8 @@ macro
 
 rule
   {WHITESPACE}      # no action
-  {WORD}            [ [:WORD, text] }
+  {WORD}            { [:WORD, text] }
+  ".*"              { [:WORD, text[1..-2]] }
   {WORD}={WORD}     { [:ASSIGNMENT_WORD, text] }
   xxxxxxxxx         { [:NAME, text] }
   {NEWLINE}         { [:NEWLINE] }

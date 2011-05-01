@@ -9,20 +9,14 @@ class ShellParser < Racc::Parser
 
 module_eval(<<'...end shell.racc/module_eval...', 'shell.racc', 174)
 
-def parse(str)
-  @tokenizer = ShellLexer.new
-  @tokenizer.scan_str(str)
+def parse_str(str)
+  scan_str(str)
   do_parse
 end
 
 def parse_file(filename)
-  @tokenizer = ShellLexer.new
-  @tokenizer.scan_file(filename)
+  scan_file(filename)
   do_parse
-end
-
-def next_token
-  return @tokenizer.next_token
 end
 
 # vim:set ft=racc:

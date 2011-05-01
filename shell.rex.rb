@@ -5,7 +5,7 @@
 #++
 
 require 'racc/parser'
-class ShellLexer < Racc::Parser
+class ShellParser < Racc::Parser
   require 'strscan'
 
   class ScanError < StandardError ; end
@@ -56,7 +56,10 @@ class ShellLexer < Racc::Parser
           ;
 
         when (text = ss.scan(/[A-Za-z][A-Za-z_]*/))
-          ;
+           @rex_tokens.push action { [:WORD, text] }
+
+        when (text = ss.scan(/".*"/))
+           @rex_tokens.push action { [:WORD, text[1..-2]] }
 
         when (text = ss.scan(/[A-Za-z][A-Za-z_]*=[A-Za-z][A-Za-z_]*/))
            @rex_tokens.push action { [:ASSIGNMENT_WORD, text] }
