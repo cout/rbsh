@@ -58,47 +58,47 @@ for_clause       : For name linebreak                            do_group { resu
                  | For name linebreak in          sequential_sep do_group { result = Node::For.new(val[1], val[-2] val[-1]) }
                  | For name linebreak in wordlist sequential_sep do_group { result = Node::For.new(val[1], val[3], val[-2], val[-1] }
                  ;
-name             : NAME        /* Apply rule 5 */       { result = Node::Name.new(val.first) }
+name             : NAME        /* Apply rule 5 */                     { result = Node::Name.new(val.first) }
                  ;
 in               : In          /* Apply rule 6 */
                  ;
-wordlist         : wordlist WORD                        { result = Node::Wordlist.new(val.first, val.last) }
-                 |          WORD                        { result = Node::Wordlist.new(nil, val.last) }
+wordlist         : wordlist WORD                                      { result = Node::Wordlist.new(val.first, val.last) }
+                 |          WORD                                      { result = Node::Wordlist.new(nil, val.last) }
                  ;
 case_clause      : Case WORD linebreak in linebreak case_list    Esac { result = Node::CaseClause.new(val[1], val[-1]) }
                  | Case WORD linebreak in linebreak case_list_ns Esac { result = Node::CaseClause.new(val[1], val[-1]) }
                  | Case WORD linebreak in linebreak              Esac { result = Node::CaseClause.new(val[1], nil) }
                  ;
-case_list_ns     : case_list case_item_ns               { result = Node::CaseListNs.new(val.first, val.last) }
-                 |           case_item_ns               { result = Node::CaseListNs.new(nil, val.last) }
+case_list_ns     : case_list case_item_ns                             { result = Node::CaseListNs.new(val.first, val.last) }
+                 |           case_item_ns                             { result = Node::CaseListNs.new(nil, val.last) }
                  ;
-case_list        : case_list case_item                  { result = Node::CaseList.new(val.first, val.last) }
-                 |           case_item                  { result = Node::CaseList.new(nil, val.last) }
+case_list        : case_list case_item                                { result = Node::CaseList.new(val.first, val.last) }
+                 |           case_item                                { result = Node::CaseList.new(nil, val.last) }
                  ;
-case_item_ns     :     pattern ')'               linebreak  { result = Node::CaseItemNs.new(val[0], nil) }
-                 |     pattern ')' compound_list linebreak  { result = Node::CaseItemNs.new(val[0], val[2]) }
-                 | '(' pattern ')'               linebreak  { result = Node::CaseItemNs.new(val[1], nil) }
-                 | '(' pattern ')' compound_list linebreak  { result = Node::CaseItemNs.new(val[1], val[3]) }
+case_item_ns     :     pattern ')'               linebreak            { result = Node::CaseItemNs.new(val[0], nil) }
+                 |     pattern ')' compound_list linebreak            { result = Node::CaseItemNs.new(val[0], val[2]) }
+                 | '(' pattern ')'               linebreak            { result = Node::CaseItemNs.new(val[1], nil) }
+                 | '(' pattern ')' compound_list linebreak            { result = Node::CaseItemNs.new(val[1], val[3]) }
                  ;
-case_item        :     pattern ')' linebreak     DSEMI linebreak  { result = Node::CaseItem.new(val[0], nil) }
-                 |     pattern ')' compound_list DSEMI linebreak  { result = Node::CaseItem.new(val[0], val[2]) }
-                 | '(' pattern ')' linebreak     DSEMI linebreak  { result = Node::CaseItem.new(val[1], nil) }
-                 | '(' pattern ')' compound_list DSEMI linebreak  { result = Node::CaseItem.new(val[1], val[3]) }
+case_item        :     pattern ')' linebreak     DSEMI linebreak      { result = Node::CaseItem.new(val[0], nil) }
+                 |     pattern ')' compound_list DSEMI linebreak      { result = Node::CaseItem.new(val[0], val[2]) }
+                 | '(' pattern ')' linebreak     DSEMI linebreak      { result = Node::CaseItem.new(val[1], nil) }
+                 | '(' pattern ')' compound_list DSEMI linebreak      { result = Node::CaseItem.new(val[1], val[3]) }
                  ;
-pattern          :             WORD  /* Apply rule 4 */           { result = Node::Pattern.new(nil, val.last) }
-                 | pattern '|' WORD  /* Do not apply rule 4 */    { result = Node::Pattern.new(val.first, val.last) }
+pattern          :             WORD  /* Apply rule 4 */               { result = Node::Pattern.new(nil, val.last) }
+                 | pattern '|' WORD  /* Do not apply rule 4 */        { result = Node::Pattern.new(val.first, val.last) }
                  ;
-if_clause        : If compound_list Then compound_list else_part Fi { result = Node::IfClause.new(val[1], val[3], val[4]) }
-                 | If compound_list Then compound_list           Fi { result = Node::IfClause.new(val[1], val[3], nil) }
+if_clause        : If compound_list Then compound_list else_part Fi   { result = Node::IfClause.new(val[1], val[3], val[4]) }
+                 | If compound_list Then compound_list           Fi   { result = Node::IfClause.new(val[1], val[3], nil) }
                  ;
-else_part        : Elif compound_list Then else_part                { result = Node::ElsePart.new(val[1], val[-1]) }
-                 | Else compound_list                               { result = Node::ElsePart.new(val[1], nil) }
+else_part        : Elif compound_list Then else_part                  { result = Node::ElsePart.new(val[1], val[-1]) }
+                 | Else compound_list                                 { result = Node::ElsePart.new(val[1], nil) }
                  ;
-while_clause     : While compound_list do_group                     { result = Node::WhileClause.new(val[1]) }
+while_clause     : While compound_list do_group                       { result = Node::WhileClause.new(val[1]) }
                  ;
-until_clause     : Until compound_list do_group                     { result = Node::UntilClause.new(val[1]) }
+until_clause     : Until compound_list do_group                       { result = Node::UntilClause.new(val[1]) }
                  ;
-function_definition : fname '(' ')' linebreak function_body         { result = Node::FunctionDefinition.new(val.first, val.last) }
+function_definition : fname '(' ')' linebreak function_body           { result = Node::FunctionDefinition.new(val.first, val.last) }
                  ;
 function_body    : compound_command                /* Apply rule 9 */ { result = Node::FunctionBody.new(val.first, nil) }
                  | compound_command redirect_list  /* Apply rule 9 */ { result = Node::FunctionBody.new(val.first, val.last) }
