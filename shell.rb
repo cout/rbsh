@@ -1,3 +1,6 @@
+require 'shell.tab.rb'
+require 'shell.rex.rb'
+
 class Command
   def initialize(cmd, args)
     @cmd = cmd

@@ -6,6 +6,27 @@
 
 require 'racc/parser.rb'
 class ShellParser < Racc::Parser
+
+module_eval(<<'...end shell.racc/module_eval...', 'shell.racc', 174)
+
+def parse(str)
+  @tokenizer = ShellLexer.new
+  @tokenizer.scan_str(str)
+  do_parse
+end
+
+def parse_file(filename)
+  @tokenizer = ShellLexer.new
+  @tokenizer.scan_file(filename)
+  do_parse
+end
+
+def next_token
+  return @tokenizer.next_token
+end
+
+# vim:set ft=racc:
+...end shell.racc/module_eval...
 ##### State transition tables begin ###
 
 racc_action_table = [

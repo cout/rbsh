@@ -168,4 +168,24 @@ sequential_sep   : ';' linebreak                   { result = Node::SequentialSe
                  | newline_list                    { result = Node::SequentialSep.new(val.first) }
                  ;
 
+end
+
+---- inner
+
+def parse(str)
+  @tokenizer = ShellLexer.new
+  @tokenizer.scan_str(str)
+  do_parse
+end
+
+def parse_file(filename)
+  @tokenizer = ShellLexer.new
+  @tokenizer.scan_file(filename)
+  do_parse
+end
+
+def next_token
+  return @tokenizer.next_token
+end
+
 # vim:set ft=racc:
