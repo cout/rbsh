@@ -1,8 +1,8 @@
-require 'shell.tab.rb'
-require 'shell.rex.rb'
-require 'context'
-require 'command'
-require 'bareword'
+require 'rbsh/shell.tab.rb'
+require 'rbsh/shell.rex.rb'
+require 'rbsh/context'
+require 'rbsh/command'
+require 'rbsh/bareword'
 
 if __FILE__ == $0 then
   extend Commands

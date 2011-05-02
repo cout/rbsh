@@ -1,4 +1,4 @@
-require 'command'
+require 'rbsh/command'
 
 class Node
 end

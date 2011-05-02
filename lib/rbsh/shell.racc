@@ -172,7 +172,7 @@ end
 
 ---- header
 
-require 'shellnode'
+require 'rbsh/shellnode'
 
 ---- inner
 

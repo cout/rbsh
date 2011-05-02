@@ -7,7 +7,7 @@
 require 'racc/parser.rb'
 
 
-require 'shellnode'
+require 'rbsh/shellnode'
 
 class ShellParser < Racc::Parser
 
