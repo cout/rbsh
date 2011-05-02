@@ -89,8 +89,9 @@ if __FILE__ == $0 then
   puts foo --help
 
   p = ShellParser.new
-  p.scan_str <<-END
+  result = p.scan_str <<-END
     echo "hello"
   END
+  p result
 end
 
