@@ -25,5 +25,10 @@ if __FILE__ == $0 then
 
   context = Context.new
   p ast.eval(context)
+
+  ast = p.scan_str <<-END
+    foo=42
+    echo $foo
+  END
 end
 

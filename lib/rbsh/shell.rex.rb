@@ -37,19 +37,7 @@ class ShellParser < Racc::Parser
   end
 
   def next_token
-    p @rex_tokens
-    t = @rex_tokens.shift
-    if t then
-      puts "next token: #{t.inspect}"
-      return t
-    else
-      puts "done"
-      return [ false, '$' ]
-    end
-  end
-
-  def on_error(*args)
-    $stderr.puts "ERROR: #{args.inspect}"
+    @rex_tokens.shift
   end
 
   def scan_evaluate( str )
@@ -67,14 +55,17 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/\s+/))
           ;
 
+        when (text = ss.scan(/[A-Za-z][A-Za-z_]*=[A-Za-z0-9]+/))
+           @rex_tokens.push action { [:ASSIGNMENT_WORD, text] } # Non-posix
+
+        when (text = ss.scan(/[A-Za-z][A-Za-z_]*=[A-Za-z][A-Za-z_]*/))
+           @rex_tokens.push action { [:ASSIGNMENT_WORD, text] }
+
         when (text = ss.scan(/[A-Za-z][A-Za-z_]*/))
            @rex_tokens.push action { [:WORD, text] }
 
         when (text = ss.scan(/".*"/))
            @rex_tokens.push action { [:WORD, text[1..-2]] }
-
-        when (text = ss.scan(/[A-Za-z][A-Za-z_]*=[A-Za-z][A-Za-z_]*/))
-           @rex_tokens.push action { [:ASSIGNMENT_WORD, text] }
 
         when (text = ss.scan(/xxxxxxxxx/))
            @rex_tokens.push action { [:NAME, text] }
