@@ -22,19 +22,19 @@ list             : list separator_op and_or             { result = Node::List.ne
                  |                   and_or             { result = Node::List.new(nil, nil, val.last) }
                  ;
 and_or           :                         pipeline     { result = Node::AndOr.new(nil, nil, val.last) }
-                 | and_or AND_IF linebreak pipeline     { result = Node::AndOr.new(val[0], val[2], val[3]) }
-                 | and_or OR_IF  linebreak pipeline     { result = Node::AndOr.new(val[0], val[2], val[3]) }
+                 | and_or AND_IF linebreak pipeline     { result = Node::AndOr.new(val[0], val[1], val[3]) }
+                 | and_or OR_IF  linebreak pipeline     { result = Node::AndOr.new(val[0], val[1], val[3]) }
                  ;
-pipeline         :      pipe_sequence                   { result = Node::Pipeline.new(val.last) }
-                 | Bang pipe_sequence                   { result = Node::Pipeline.new(val.last) }
+pipeline         :      pipe_sequence                   { result = Node::Pipeline.new(val.last, false) }
+                 | Bang pipe_sequence                   { result = Node::Pipeline.new(val.last, true) }
                  ;
 pipe_sequence    :                             command  { result = Node::PipeSequence.new(nil, val.last) }
                  | pipe_sequence '|' linebreak command  { result = Node::PipeSequence.new(val.first, val.last) }
                  ;
-command          : simple_command                       { result = Node::Command.new(val.first) }
-                 | compound_command                     { result = Node::Command.new(val.first) }
-                 | compound_command redirect_list       { result = Node::Command.new(val.first) }
-                 | function_definition                  { result = Node::Command.new(val.first) }
+command          : simple_command                       { result = Node::Command.new(val.first, nil) }
+                 | compound_command                     { result = Node::Command.new(val.first, nil) }
+                 | compound_command redirect_list       { result = Node::Command.new(val.first, val.last) }
+                 | function_definition                  { result = Node::Command.new(val.first, nil) }
                  ;
 compound_command : brace_group                          { result = Node::CompoundCommand.new(val.first) }
                  | subshell                             { result = Node::CompoundCommand.new(val.first) }
@@ -169,6 +169,10 @@ sequential_sep   : ';' linebreak                   { result = Node::SequentialSe
                  ;
 
 end
+
+---- header
+
+require 'shellnode'
 
 ---- inner
 

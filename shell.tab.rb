@@ -5,9 +5,13 @@
 #
 
 require 'racc/parser.rb'
+
+
+require 'shellnode'
+
 class ShellParser < Racc::Parser
 
-module_eval(<<'...end shell.racc/module_eval...', 'shell.racc', 174)
+module_eval(<<'...end shell.racc/module_eval...', 'shell.racc', 178)
 
 def parse_str(str)
   scan_str(str)
@@ -626,14 +630,14 @@ module_eval(<<'.,.,', 'shell.racc', 25)
 
 module_eval(<<'.,.,', 'shell.racc', 27)
   def _reduce_8(val, _values, result)
-     result = Node::Pipeline.new(val.last) 
+     result = Node::Pipeline.new(val.last, false) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'shell.racc', 28)
   def _reduce_9(val, _values, result)
-     result = Node::Pipeline.new(val.last) 
+     result = Node::Pipeline.new(val.last, true) 
     result
   end
 .,.,
@@ -654,28 +658,28 @@ module_eval(<<'.,.,', 'shell.racc', 31)
 
 module_eval(<<'.,.,', 'shell.racc', 33)
   def _reduce_12(val, _values, result)
-     result = Node::Command.new(val.first) 
+     result = Node::Command.new(val.first, nil) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'shell.racc', 34)
   def _reduce_13(val, _values, result)
-     result = Node::Command.new(val.first) 
+     result = Node::Command.new(val.first, nil) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'shell.racc', 35)
   def _reduce_14(val, _values, result)
-     result = Node::Command.new(val.first) 
+     result = Node::Command.new(val.first, val.last) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'shell.racc', 36)
   def _reduce_15(val, _values, result)
-     result = Node::Command.new(val.first) 
+     result = Node::Command.new(val.first, nil) 
     result
   end
 .,.,
