@@ -37,7 +37,19 @@ class ShellParser < Racc::Parser
   end
 
   def next_token
-    @rex_tokens.shift
+    p @rex_tokens
+    t = @rex_tokens.shift
+    if t then
+      puts "next token: #{t.inspect}"
+      return t
+    else
+      puts "done"
+      return [ false, '$' ]
+    end
+  end
+
+  def on_error(*args)
+    $stderr.puts "ERROR: #{args.inspect}"
   end
 
   def scan_evaluate( str )

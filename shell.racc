@@ -176,14 +176,4 @@ require 'shellnode'
 
 ---- inner
 
-def parse_str(str)
-  scan_str(str)
-  do_parse
-end
-
-def parse_file(filename)
-  scan_file(filename)
-  do_parse
-end
-
 # vim:set ft=racc:

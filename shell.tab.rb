@@ -13,16 +13,6 @@ class ShellParser < Racc::Parser
 
 module_eval(<<'...end shell.racc/module_eval...', 'shell.racc', 178)
 
-def parse_str(str)
-  scan_str(str)
-  do_parse
-end
-
-def parse_file(filename)
-  scan_file(filename)
-  do_parse
-end
-
 # vim:set ft=racc:
 ...end shell.racc/module_eval...
 ##### State transition tables begin ###
@@ -616,14 +606,14 @@ module_eval(<<'.,.,', 'shell.racc', 23)
 
 module_eval(<<'.,.,', 'shell.racc', 24)
   def _reduce_6(val, _values, result)
-     result = Node::AndOr.new(val[0], val[2], val[3]) 
+     result = Node::AndOr.new(val[0], val[1], val[3]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'shell.racc', 25)
   def _reduce_7(val, _values, result)
-     result = Node::AndOr.new(val[0], val[2], val[3]) 
+     result = Node::AndOr.new(val[0], val[1], val[3]) 
     result
   end
 .,.,
