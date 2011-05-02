@@ -1042,14 +1042,14 @@ module_eval(<<'.,.,', 'shell.racc', 113)
 
 module_eval(<<'.,.,', 'shell.racc', 114)
   def _reduce_69(val, _values, result)
-     result = Node::SimpleCommand.new(nil, val[1], val[2]) 
+     result = Node::SimpleCommand.new(nil, val[0], val[1]) 
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'shell.racc', 115)
   def _reduce_70(val, _values, result)
-     result = Node::SimpleCommand.new(nil, val[1], nil) 
+     result = Node::SimpleCommand.new(nil, val[0], nil) 
     result
   end
 .,.,

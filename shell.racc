@@ -112,8 +112,8 @@ do_group         : Do compound_list Done           /* Apply rule 6 */ { result =
 simple_command   : cmd_prefix cmd_word cmd_suffix  { result = Node::SimpleCommand.new(val[0], val[1], val[2]) }
                  | cmd_prefix cmd_word             { result = Node::SimpleCommand.new(val[0], val[1], nil) }
                  | cmd_prefix                      { result = Node::SimpleCommand.new(val[0], nil, nil) }
-                 | cmd_name cmd_suffix             { result = Node::SimpleCommand.new(nil, val[1], val[2]) }
-                 | cmd_name                        { result = Node::SimpleCommand.new(nil, val[1], nil) }
+                 | cmd_name cmd_suffix             { result = Node::SimpleCommand.new(nil, val[0], val[1]) }
+                 | cmd_name                        { result = Node::SimpleCommand.new(nil, val[0], nil) }
                  ;
 cmd_name         : WORD    /* Apply rule 7a */     { result = Node::CmdName.new(val.first) }
                  ;
