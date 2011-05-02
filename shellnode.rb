@@ -22,6 +22,10 @@ class Node::CmdPrefix < Node
 end
 
 class Node::CmdSuffix < Node
+  attr_reader :suffix
+  attr_reader :io_redirect
+  attr_reader :word
+
   def initialize(suffix, io_redirect, word)
     @suffix = suffix
     @io_redirect = io_redirect
@@ -30,8 +34,16 @@ class Node::CmdSuffix < Node
 
   def eval(context)
     raise 'io_redirect not yet supported' if @io_redirect
-    raise 'suffix not yet supported' if @suffix
-    return [ @word ]
+
+    args = [ ]
+    suffix = self
+    while suffix do
+      args.push(suffix.word)
+      suffix = suffix.suffix
+    end
+    args.reverse!
+
+    return args
   end
 end
 

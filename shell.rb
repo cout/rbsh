@@ -17,7 +17,7 @@ if __FILE__ == $0 then
 
   p = ShellParser.new
   ast = p.scan_str <<-END
-    echo "hello"
+    echo hello world
   END
 
   require 'pp'
