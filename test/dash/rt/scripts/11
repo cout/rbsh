@@ -1,0 +1,7 @@
+b() {
+	:
+}
+
+unset a
+a=f b
+echo $a

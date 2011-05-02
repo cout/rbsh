@@ -1,0 +1,2 @@
+/proc/$$/exe -c 'echo $0 > /dev/null'
+/proc/$$/exe -c 'trap "echo EXIT; echo 2EXIT;" EXIT; return'

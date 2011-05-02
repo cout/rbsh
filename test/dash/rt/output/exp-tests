@@ -1,0 +1,210 @@
+expect <^A>
+<^A> 
+expect <^A>
+<^A> 
+expect <^B>
+<^B> 
+expect <^B>
+<^B> 
+expect <^A>
+<^A> 
+expect <^B>
+<^B> 
+expect <abcdefgh>
+<abcdefgh> 
+expect <abcdefgh>
+<abcdefgh> 
+expect <abcdefgh>
+<abcdefgh> 
+expect <abcdefgh>
+<abcdefgh> 
+expect <abcd>
+<abcd> 
+expect <abcd>
+<abcd> 
+expect nothing
+
+expect < >
+< > 
+expect <-->
+<--> 
+expect <>
+<> 
+expect <>
+<> 
+expect <>
+<> 
+expect <>
+<> 
+expect <>
+<> 
+expect <>
+<> 
+expect <abc>
+<abc> 
+expect <abc>
+<abc> 
+expect <abc>
+<abc> 
+expect <abc>
+<abc> 
+expect <abcdef>
+<abcdef> 
+expect <abcdef>
+<abcdef> 
+expect <^A>
+<^A> 
+expect <^B>
+<^B> 
+expect <^A>
+<^A> 
+expect <^B>
+<^B> 
+expect <^A>
+<^A> 
+expect <^B>
+<^B> 
+expect nothing
+
+expect <>
+<> 
+expect <>
+<> 
+expect <>
+<> 
+expect <>
+<> 
+expect <Hello World!>
+<Hello world!> 
+expect <`>
+<`> 
+expect <">
+<"> 
+expect <\^A>
+<\^A> 
+expect <\$>
+<\$> 
+expect <\\>
+<\\> 
+expect <a> <b>
+<a> <b> 
+expect <^A> <^B>
+<^A> <^B> 
+expect <**>
+<**> 
+expect <\.\./*/>
+<\.\./*/> 
+expect <^A^B^A^B>
+<^A^B^A^B> 
+expect <^A^A>
+<^A^A> 
+expect <^A^B>
+<^A^B> 
+expect <^A^A^B>
+<^A^A^B> 
+expect <  abc> <def> <ghi> <jkl  >
+<  abc> <def> <ghi> <jkl  > 
+expect <  abc> <def> <ghi> <jkl  >
+<  abc> <def> <ghi> <jkl  > 
+expect <--abc> <def> <ghi> <jkl-->
+<--abc> <def> <ghi> <jkl--> 
+expect <a b> <cd> <ef> <gh>
+<a b> <cd> <ef> <gh> 
+expect <a b> <cd> <ef> <gh>
+<a b> <cd> <ef> <gh> 
+expect <a b> <cd> <ef> <gh>
+<a b> <cd> <ef> <gh> 
+expect <  >
+<  > 
+expect < - >
+< - > 
+expect </^root:/{s/^[^:]*:[^:]*:\([^:]*\).*$/\1/>
+</^root:/{s/^[^:]*:[^:]*:\([^:]*\).*$/\1/> 
+expect <foo bar>
+<foo bar> 
+expect <foo> <bar>
+<foo> <bar> 
+expect <abc>
+<abc> 
+expect <abc>
+<abc> 
+expect <posix>
+<posix> 
+expect <10>
+<10> 
+expect <file.o>
+<file.o> 
+expect <posix>
+<posix> 
+expect </src/cmd>
+</src/cmd> 
+expect <three>
+<three> 
+expect <abcdef>
+<abcdef> 
+expect <abcdef>
+<abcdef> 
+expect <abcdef>
+<abcdef> 
+expect <abcdef>
+<abcdef> 
+expect <\$x>
+<\$x> 
+expect <$x>
+<$x> 
+expect <\$x>
+<\$x> 
+expect <abc> <def> <ghi> <jkl>
+<abc> <def> <ghi> <jkl> 
+expect <abc def ghi jkl>
+<abc def ghi jkl> 
+expect <abc:def ghi:jkl>
+<abc:def ghi:jkl> 
+expect <abc> <def ghi> <jkl>
+<abc> <def ghi> <jkl> 
+expect <xxabc> <def ghi> <jklyy>
+<xxabc> <def ghi> <jklyy> 
+expect <abc> <def ghi> <jklabc> <def ghi> <jkl>
+<abc> <def ghi> <jklabc> <def ghi> <jkl> 
+expect <abcdef>
+<abcdef> 
+expect <bar> <> <xyz> <> <abc>
+<bar> <> <xyz> <> <abc> 
+expect <$foo>
+<$foo> 
+expect <10>
+<10> 
+expect <newline expected>
+<newline expected> 
+expect <got it>
+<got it> 
+expect <got it>
+<got it> 
+expect <one> <three> <five>
+<one> <three> <five> 
+expect <5> <5>
+<5> <5> 
+expect <3>
+<3> 
+expect <1>
+<1> 
+expect <1>
+<1> 
+expect <23>
+<23> 
+expect <23>
+<23> 
+expect <23>
+<23> 
+expect <23>
+<23> 
+expect <42>
+<42> 
+expect <\>
+<\> 
+expect <~>
+<~> 
+expect nothing
+
+expect nothing
+

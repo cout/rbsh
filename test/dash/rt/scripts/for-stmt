@@ -1,0 +1,4 @@
+for i
+in ok; do
+	echo $i
+done

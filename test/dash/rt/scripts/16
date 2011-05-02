@@ -1,0 +1,5 @@
+d=$(mktemp -d)
+cd $d
+chmod 000 $d
+cd ..
+pwd

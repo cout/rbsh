@@ -1,0 +1,4 @@
+exec 2> /dev/null
+set -i
+set -m
+echo "$(echo hi)"

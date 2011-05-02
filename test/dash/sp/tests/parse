@@ -1,0 +1,15 @@
+#!/bin/sh
+
+trap 'kill $! > /dev/null 2>&1; rm -f $fifo; exit' TERM
+
+fifo=$(mktemp -u)
+mkfifo $fifo
+
+{
+	sleep 1
+	kill $$
+}&
+
+yes echo > $fifo&
+< $fifo /proc/self/exe&
+wait

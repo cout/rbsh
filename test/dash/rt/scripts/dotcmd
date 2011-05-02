@@ -1,0 +1,21 @@
+trap 'rm -f $TMP' EXIT
+TMP=$(tempfile)
+
+cat <<- EOF > $TMP
+	return
+	echo not here
+EOF
+
+a() {
+	. $TMP
+	echo here
+}
+
+a
+
+cat <<- EOF > $TMP
+	exit
+EOF
+
+(false; . $TMP)
+echo $?

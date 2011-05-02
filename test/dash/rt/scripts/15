@@ -1,0 +1,6 @@
+exec < $0
+cat&
+wait
+echo
+< $0 cat&
+wait

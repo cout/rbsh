@@ -1,0 +1,1 @@
+echo a$(printf 'c\0c')b | cat -A

@@ -1,0 +1,6 @@
+cat /dev/null
+cd /
+cat() {
+	echo hi
+}
+cat

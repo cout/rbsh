@@ -1,0 +1,14 @@
+exec 2> /dev/null
+a=$(echo hi >&2) 2>&1 
+a() {
+	:
+}
+
+exec 2> /dev/null
+a > /
+echo hi
+
+echo x 3>&1
+2> /dev/null echo y >&3 || :
+
+echo hi > /dev/null >&- || :

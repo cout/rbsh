@@ -1,0 +1,12 @@
+hi
+time(seconds)        unlimited
+file(blocks)         unlimited
+data(kbytes)         unlimited
+stack(kbytes)        8192
+coredump(blocks)     unlimited
+memory(kbytes)       unlimited
+locked memory(kbytes) unlimited
+process              unlimited
+nofiles              1024
+vmemory(kbytes)      unlimited
+locks                unlimited

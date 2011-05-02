@@ -1,0 +1,7 @@
+cd /
+unset OLDPWD
+cd -
+
+OLDPWD=bin
+CDPATH=/usr
+cd -

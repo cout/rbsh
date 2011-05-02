@@ -1,0 +1,49 @@
+cat << A; cat << B
+`echo a`
+A
+b
+B
+
+(
+	i=a
+	j=0
+	while [ $j -lt 4096 ]; do
+		eval "
+			k=\$(cat <<- EOF)
+				$i
+			EOF
+		"
+		if [ "${#i}" -ne "${#k}" ]; then
+			echo not OK
+			exit
+		fi
+
+		j=$(($j + 1))
+		i=a$i
+	done
+
+	echo OK
+)
+
+eval 'cat <<- EOF
+	OK
+EOF'
+echo
+
+cat << _ACEOF
+_ASBOX
+_ACEOF
+
+cat <<- ""
+	OK
+
+cat <<- $a
+	OK
+$a
+
+unset a
+cat <<- EOF > /dev/null
+	${a=OK}
+EOF
+echo $a
+unset a

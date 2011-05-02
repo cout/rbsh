@@ -1,0 +1,4 @@
+command -- echo hi
+command
+command -v
+ulimit -a

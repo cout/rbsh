@@ -1,0 +1,8 @@
+unset a
+a=x
+sh -c 'echo ${a-good}'
+unset a
+export a
+sh -c 'echo ${a-good}'
+a=good
+sh -c 'echo $a'

@@ -1,0 +1,23 @@
+(
+	trap 'echo hi' EXIT
+	sh -c :
+)
+(
+	trap 'echo hi' EXIT
+	: > /dev/null
+)
+(
+	set -i
+	trap 'echo $_' EXIT
+	:
+)
+while :; do
+	trap 'echo hi' EXIT
+	break
+done > /dev/null | cat
+(
+	a() {
+		:
+	}
+	a < /dev/null
+)

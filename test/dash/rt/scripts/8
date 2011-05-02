@@ -1,0 +1,8 @@
+set -- "$@"
+echo $#
+set -- "$@$a"
+echo $#
+set -- "$a"
+echo $#
+set -- $a
+echo $#

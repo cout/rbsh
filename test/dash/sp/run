@@ -1,0 +1,46 @@
+#!/bin/sh
+
+tmp=$(tempfile)
+trap "rm $tmp" EXIT
+
+runone() {
+	local test i s count name
+	test=$1
+	name=${test##*/}
+
+	for s in $shells; do
+		case $name in
+		parse)
+			case $s in
+			ksh | posh)
+				continue
+				;;
+			esac
+			;;
+		esac
+		i=0
+		count=0
+		while [ $i -lt 10 ]; do
+			$s "$test"
+			i=$(($i + 1))
+		done > $tmp
+		count=$(wc -l < $tmp)
+		echo $s $name $((($count + 5) / 10))
+	done
+	echo
+}
+
+[ -e "$1" ] || {
+	echo 'run <test>'
+	exit 1
+}
+
+shells=${shells:-bash ksh dash posh zsh}
+
+if [ -d $1 ]; then
+	set $1/*
+fi
+
+for i; do
+	runone $i
+done

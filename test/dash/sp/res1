@@ -1,0 +1,70 @@
+bash arith 14346
+ksh arith 35974
+dash arith 71133
+posh arith 33185
+zsh arith 31223
+
+bash exec 576
+ksh exec 648
+dash exec 782
+posh exec 696
+zsh exec 529
+
+bash fork 1188
+ksh fork 2122
+dash fork 3186
+posh fork 2282
+zsh fork 1187
+
+bash func 12813
+ksh func 53219
+dash func 117015
+posh func 46594
+zsh func 22125
+
+bash glob 78
+ksh glob 164
+dash glob 201
+posh glob 125
+zsh glob 72
+
+bash hdoc 6673
+ksh hdoc 13738
+dash hdoc 4407
+posh hdoc 12672
+zsh hdoc 12846
+
+bash hdoc2 9896
+ksh hdoc2 15952
+dash hdoc2 37678
+posh hdoc2 15090
+zsh hdoc2 14779
+
+bash loop 27726
+ksh loop 98390
+dash loop 197712
+posh loop 85912
+zsh loop 58161
+
+bash parse 20590
+dash parse 161219
+zsh parse 24085
+
+bash printf 16978
+ksh printf 598
+dash printf 84364
+posh printf 598
+zsh printf 34898
+
+bash read 14126
+ksh read 40052
+dash read 70083
+posh read 31378
+zsh read 27251
+
+bash subst 6595
+ksh subst 15467
+dash subst 22549
+posh subst 13353
+zsh subst 14655
+

@@ -1,0 +1,6 @@
+(
+	{
+		exec ls /proc/self/fd
+	} < /dev/null
+)
+exec ls /proc/self/fd < /dev/null

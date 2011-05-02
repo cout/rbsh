@@ -1,0 +1,19 @@
+(
+	exec 2>&1
+	PATH=/
+	nosuchthing 2> /dev/null
+	echo >&2
+)
+
+(
+	trap 'rm -f $TMP' EXIT
+	TMP=$(tempfile -s nosuchthing)
+
+	cat <<- EOF > $TMP
+		echo OK
+	EOF
+	chmod u+x $TMP
+
+	cd /
+	PATH=${TMP%/*} ${TMP##*/}
+)

@@ -1,0 +1,10 @@
+(
+	export CC=
+	{ export; env; } | egrep '^(export )?CC($|=)'
+	unset CC
+	export CC
+	{ export; env; } | egrep '^(export )?CC($|=)'
+	CC=
+	export CC
+	{ export; env; } | egrep '^(export )?CC($|=)'
+)

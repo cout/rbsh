@@ -1,0 +1,58 @@
+set +e
+
+(
+	set -e
+	eval 'false; echo bad'
+)
+
+(
+	set -e
+	eval false && :
+	echo hi
+)
+
+(
+	set -e
+	if eval false; then
+		:
+	fi
+	echo hi
+)
+
+(
+	set -e
+	eval '$(exit 3)' || echo $?
+)
+
+# Test resetting of funcnest.
+(
+	set -ei
+	a() {
+		false
+		echo bad
+	}
+	b() {
+		:
+	}
+	eval a || :
+	b
+	echo $_
+)
+
+(
+	set -e
+	a() {
+		eval return 1 || echo hi
+	}
+	a
+	echo bad
+)
+
+(
+	set -e
+	trap 'false' USR1
+	read pid crap < /proc/self/stat
+	kill -USR1 $pid&
+	wait
+	echo bad
+)

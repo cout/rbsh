@@ -1,0 +1,15 @@
+#!/bin/sh
+
+trap 'exit' TERM
+
+{
+	sleep 1
+	kill $$
+}&
+
+while :; do
+	: <<- EOF
+		$a
+	EOF
+	echo
+done

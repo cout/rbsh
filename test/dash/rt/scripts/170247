@@ -1,0 +1,4 @@
+exec 5>&1
+{
+echo `(/nosuchcommand) 2>/dev/null || echo ok`
+} >&5

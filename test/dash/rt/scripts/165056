@@ -1,0 +1,14 @@
+foo()
+{
+        eval "if [ 0 ]; then
+                if [ 0 ]; then
+                        return 1
+                fi
+                bar=baz
+        fi
+        echo 'How did I get here?'
+        "
+        return 0
+}
+foo
+echo $?

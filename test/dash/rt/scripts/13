@@ -1,0 +1,4 @@
+set -e
+trap ': && echo hi' EXIT
+a() { return 1; }
+a

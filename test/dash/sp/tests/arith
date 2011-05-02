@@ -1,0 +1,13 @@
+#!/bin/sh
+
+trap 'exit' TERM
+
+{
+	sleep 1
+	kill $$
+}&
+
+while :; do 
+	a=$((1234567 + 1))
+	echo
+done

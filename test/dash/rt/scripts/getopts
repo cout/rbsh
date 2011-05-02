@@ -1,0 +1,4 @@
+set -- -x
+getopts :a optc
+getopts :a optc
+echo $?

@@ -1,0 +1,4 @@
+exec 2>&1
+sh -c 'kill $$'
+echo
+:

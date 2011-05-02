@@ -1,0 +1,13 @@
+#!/bin/sh
+
+trap 'kill $! 2> /dev/null; exit' TERM
+
+{
+	sleep 1
+	kill $$
+}&
+
+while :; do 
+	/bin/true
+	echo
+done

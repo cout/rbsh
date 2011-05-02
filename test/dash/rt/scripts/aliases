@@ -1,0 +1,19 @@
+alias a="echo "
+a a
+alias a="while false; do :; done"
+a
+
+alias a="echo hi"
+
+set -- a
+case $1 in
+a)a
+	echo a
+	;;
+f)
+	echo f
+	;;
+*)
+	echo default
+	;;
+esac

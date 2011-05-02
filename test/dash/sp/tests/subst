@@ -1,0 +1,17 @@
+#!/bin/sh
+
+trap 'kill $! 2> /dev/null; exit' TERM
+
+{
+	sleep 1
+	kill $$
+}&
+
+a=/var/cache/apt/archives/foo_3-i386.deb
+
+while :; do 
+	b=${a##*/}
+	c=${a%%/*}
+	d=$#a
+	echo
+done

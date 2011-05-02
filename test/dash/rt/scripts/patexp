@@ -1,0 +1,5 @@
+echo /root*
+echo "/"root*
+
+echo /*/null
+echo /*"/null"

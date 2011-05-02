@@ -1,0 +1,23 @@
+case a in
+[\]a])
+	echo hi
+;;
+esac
+
+case d in
+[[:alpha:]])
+	echo ok
+;;
+esac
+
+case \\ in
+[[-^])
+	echo good
+;;
+esac
+
+case 3a in
+[![:digit:]]*)
+	echo bad
+;;
+esac

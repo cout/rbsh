@@ -1,0 +1,18 @@
+#!/bin/sh
+
+trap 'kill $! 2> /dev/null; rm -f $t; exit' TERM
+
+t=$(mktemp -u)
+mkfifo $t || exit
+
+{
+	sleep 1
+	kill $$
+}&
+
+yes > $t&
+
+while :; do 
+	read a
+	echo
+done < $t

@@ -1,0 +1,16 @@
+printf '%*d\n' . 3 2> /dev/null
+printf '%d\n' \'²
+
+# 187827
+printf '\1\n'
+
+# POSIX: printf is not subject to any exceptions wrt option processing.
+printf -- '\n'
+
+printf '%d' abc > /dev/null 2>&1
+printf '\n' > /dev/null
+echo $?
+
+echo test\\ test
+echo '\c'
+echo test\\ test

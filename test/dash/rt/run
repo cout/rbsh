@@ -1,0 +1,14 @@
+#!/bin/sh
+
+[ $# -ge 2 ] || {
+	echo "Usage: $0 <shell> <dir>" >&2
+	exit 1
+}
+
+shell=$1
+dir=$2
+
+for i in $dir/scripts/*; do
+	j=${i##*/}
+	$shell $i > $dir/new/$j
+done

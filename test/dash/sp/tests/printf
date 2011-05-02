@@ -1,0 +1,15 @@
+#!/bin/sh
+
+trap 'exit' TERM
+
+{
+	sleep 1
+	kill $$
+}&
+
+nl='
+'
+
+while :; do 
+	printf '%s' "$nl"
+done

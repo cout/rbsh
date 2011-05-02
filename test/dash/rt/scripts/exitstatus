@@ -1,0 +1,85 @@
+# backgnd
+false
+:&
+echo $?
+
+false
+(
+	:
+)&
+echo $?
+
+# com sub
+a=$(false)
+echo $?
+
+# var ass
+false
+a=
+echo $?
+
+# redir
+false
+a=$?
+echo $a
+
+# prev status
+false
+(exit)
+echo $?
+
+# unsetting an unset variable
+unset a
+unset a
+echo $?
+
+(trap 'exit 1' EXIT)
+echo $?
+
+(trap 'break 0 2> /dev/null' EXIT; exit 21)
+echo $?
+
+g() {
+	while return 2; do
+		:
+	done
+}
+g
+echo $?
+
+(
+	while return 2; do
+		:
+	done
+)
+echo $?
+
+i=0
+while [ $i != 1 ] || break; do
+	i=$(($i + 1))
+	(exit 2)
+done
+echo $?
+
+false
+eval ' '
+echo $?
+
+a() {
+	(exit 2)
+	read pid rest < /proc/self/stat
+	(kill -s USR1 $pid; exit 2)
+	(exit 2)
+}
+
+(
+	trap ":; exit" USR1
+	a
+)
+echo $?
+
+(
+	trap ":; return" USR1
+	a
+)
+echo $?

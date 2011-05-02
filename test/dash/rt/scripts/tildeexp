@@ -1,0 +1,8 @@
+unset a
+echo ${a:-~root}
+b=${a:-=~root}
+echo "$b"
+echo "${a:-~root}"
+echo ${a:-"~root"}
+a=~root:~root
+echo ${a#~root}
