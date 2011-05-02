@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'rbsh/shell'
+
+if not ARGV[0] then
+  puts "Usage: $0 <filename>"
+end
+
+if __FILE__ == $0 then
+  p = ShellParser.new
+  ast = p.scan_file(ARGV[0])
+
+  context = Context.new
+  p ast.eval(context)
+end
+
