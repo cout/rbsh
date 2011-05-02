@@ -92,6 +92,8 @@ if __FILE__ == $0 then
   result = p.scan_str <<-END
     echo "hello"
   END
-  p result
+
+  require 'pp'
+  pp result
 end
 
