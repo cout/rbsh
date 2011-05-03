@@ -92,6 +92,7 @@ wordlist         : wordlist word                                      { result =
                  |          word                                      { result = Node::Wordlist.new(nil, val.last) }
                  ;
 word             : WORD                                               { result = Node::Word.new(val.first) }
+                 | arithmetic_expansion                               { result = Node::Word.new(val.first) }
 case_clause      : Case word linebreak in linebreak case_list    Esac { result = Node::CaseClause.new(val[1], val[-1]) }
                  | Case word linebreak in linebreak case_list_ns Esac { result = Node::CaseClause.new(val[1], val[-1]) }
                  | Case word linebreak in linebreak              Esac { result = Node::CaseClause.new(val[1], nil) }
@@ -145,7 +146,6 @@ simple_command   : cmd_prefix cmd_word cmd_suffix  { result = Node::SimpleComman
 cmd_name         : word    /* Apply rule 7a */     { result = Node::CmdName.new(val.first) }
                  ;
 cmd_word         : word    /* Apply rule 7b */     { result = Node::CmdWord.new(val.first) }
-                 | arithmetic_expansion                 { result = Node::Word.new(val.first) }
                  ;
 cmd_prefix       :            io_redirect          { result = Node::CmdPrefix.new(nil, val[0], nil) }
                  | cmd_prefix io_redirect          { result = Node::CmdPrefix.new(val[0], val[1], nil) }
