@@ -175,6 +175,21 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/\$/))
            @rex_tokens.push action { [ :DOLLAR ] }
 
+        when (text = ss.scan(/\&/))
+           @rex_tokens.push action { [ :AMPERSAND ] }
+
+        when (text = ss.scan(/\;/))
+           @rex_tokens.push action { [ :SEMICOLON ] }
+
+        when (text = ss.scan(/</))
+           @rex_tokens.push action { [ :LESS ] }
+
+        when (text = ss.scan(/>/))
+           @rex_tokens.push action { [ :GREAT ] }
+
+        when (text = ss.scan(/\|/))
+           @rex_tokens.push action { [ :PIPE ] }
+
         else
           text = ss.string[ss.pos .. -1]
           raise  ScanError, "can not match: '" + text + "'"

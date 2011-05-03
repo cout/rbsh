@@ -86,10 +86,16 @@ rule
   !                  { [:Bang] }
   in                 { [:In] }
 
+  # Additional tokens not mentioned in Posix
   \(                 { [ :LPAREN ] }
   \)                 { [ :RPAREN ] }
   \$\$               { [ :DOLLARDOLLAR ] }
   \$                 { [ :DOLLAR ] }
+  \&                 { [ :AMPERSAND ] }
+  \;                 { [ :SEMICOLON ] }
+  <                  { [ :LESS ] }
+  >                  { [ :GREAT ] }
+  \|                 { [ :PIPE ] }
   
 inner
 

@@ -13,7 +13,9 @@ token  Case    Esac    While    Until    For
 token  Lbrace    Rbrace    Bang
 token  In
 
+# Additional tokens not mentioned in Posix
 token LPAREN RPAREN DOLLAR DOLLARDOLLAR
+token AMPERSAND SEMICOLON PIPE LESS GREAT
 
 # Arithmetic
 token  ArithmeticStart  ArithmeticEnd
@@ -57,7 +59,7 @@ pipeline         :      pipe_sequence                   { result = Node::Pipelin
                  | Bang pipe_sequence                   { result = Node::Pipeline.new(val.last, true) }
                  ;
 pipe_sequence    :                             command  { result = Node::PipeSequence.new(nil, val.last) }
-                 | pipe_sequence '|' linebreak command  { result = Node::PipeSequence.new(val.first, val.last) }
+                 | pipe_sequence PIPE linebreak command { result = Node::PipeSequence.new(val.first, val.last) }
                  ;
 command          : simple_command                       { result = Node::Command.new(val.first, nil) }
                  | compound_command                     { result = Node::Command.new(val.first, nil) }
@@ -118,7 +120,7 @@ case_item        :        pattern RPAREN linebreak     DSEMI linebreak { result 
                  | LPAREN pattern RPAREN compound_list DSEMI linebreak { result = Node::CaseItem.new(val[1], val[3]) }
                  ;
 pattern          :             word  /* Apply rule 4 */               { result = Node::Pattern.new(nil, val.last) }
-                 | pattern '|' word  /* Do not apply rule 4 */        { result = Node::Pattern.new(val.first, val.last) }
+                 | pattern PIPE word /* Do not apply rule 4 */        { result = Node::Pattern.new(val.first, val.last) }
                  ;
 if_clause        : If compound_list Then compound_list else_part Fi   { result = Node::IfClause.new(val[1], val[3], val[4]) }
                  | If compound_list Then compound_list           Fi   { result = Node::IfClause.new(val[1], val[3], nil) }
@@ -169,9 +171,9 @@ io_redirect      :           io_file               { result = Node::IoRedirect.n
                  |           io_here               { result = Node::IoRedirect.new(nil, nil, val[2]) }
                  | IO_NUMBER io_here               { result = Node::IoRedirect.new(val[0], nil, val[2]) }
                  ;
-io_file          : '<'       filename              { result = Node::IoFile.new(val.first, val.last) }
+io_file          : LESS      filename              { result = Node::IoFile.new(val.first, val.last) }
                  | LESSAND   filename              { result = Node::IoFile.new(val.first, val.last) }
-                 | '>'       filename              { result = Node::IoFile.new(val.first, val.last) }
+                 | GREAT     filename              { result = Node::IoFile.new(val.first, val.last) }
                  | GREATAND  filename              { result = Node::IoFile.new(val.first, val.last) }
                  | DGREAT    filename              { result = Node::IoFile.new(val.first, val.last) }
                  | LESSGREAT filename              { result = Node::IoFile.new(val.first, val.last) }
@@ -190,13 +192,13 @@ newline_list     :              NEWLINE            { result = Node::NewlineList.
 linebreak        : newline_list                    { result = Node::Linebreak.new(val.first) }
                  | /* empty */                     { result = Node::Linebreak.new(nil) }
                  ;
-separator_op     : '&'                             { result = Node::SeparatorOp.new(val.first) }
-                 | ';'                             { result = Node::SeparatorOp.new(val.first) }
+separator_op     : AMPERSAND                       { result = Node::SeparatorOp.new(val.first) }
+                 | SEMICOLON                       { result = Node::SeparatorOp.new(val.first) }
                  ;
 separator        : separator_op linebreak          { result = Node::Separator.new(val.first, nil) }
                  | newline_list                    { result = Node::Separator.new(nil, val.first) }
                  ;
-sequential_sep   : ';' linebreak                   { result = Node::SequentialSep.new(nil) }
+sequential_sep   : SEMICOLON linebreak             { result = Node::SequentialSep.new(nil) }
                  | newline_list                    { result = Node::SequentialSep.new(val.first) }
                  ;
 
