@@ -52,20 +52,26 @@ class ShellParser < Racc::Parser
       case state
       when nil
         case
+        when (text = ss.scan(/\$\(\(/))
+           @rex_tokens.push action { @states.push(state); state = :ARITH; [ :ArithmeticStart ] }
+
         when (text = ss.scan(/\s+/))
           ;
 
-        when (text = ss.scan(/[A-Za-z][A-Za-z_]*=[A-Za-z0-9]+/))
-           @rex_tokens.push action { [:ASSIGNMENT_WORD, text] } # Non-posix
+        when (text = ss.scan(/\#.*\n/))
+          ;
 
-        when (text = ss.scan(/[A-Za-z][A-Za-z_]*=[A-Za-z][A-Za-z_]*/))
+        when (text = ss.scan(/[A-Za-z0-9][A-Za-z_0-9]*=[A-Za-z0-9][A-Za-z_0-9]*/))
            @rex_tokens.push action { [:ASSIGNMENT_WORD, text] }
 
-        when (text = ss.scan(/[A-Za-z][A-Za-z_]*/))
+        when (text = ss.scan(/[A-Za-z0-9][A-Za-z_0-9]*/))
            @rex_tokens.push action { [:WORD, text] }
 
         when (text = ss.scan(/".*"/))
-           @rex_tokens.push action { [:WORD, text[1..-2]] }
+           @rex_tokens.push action { [:WORD, text[1..-2]] } # TODO: string
+
+        when (text = ss.scan(/'.*'/))
+           @rex_tokens.push action { [:WORD, text[1..-2]] } # TODO: string
 
         when (text = ss.scan(/xxxxxxxxx/))
            @rex_tokens.push action { [:NAME, text] }
@@ -154,6 +160,118 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/in/))
            @rex_tokens.push action { [:In] }
 
+        when (text = ss.scan(/\(/))
+           @rex_tokens.push action { [ :LPAREN ] }
+
+        when (text = ss.scan(/\)/))
+           @rex_tokens.push action { [ :RPAREN ] }
+
+        else
+          text = ss.string[ss.pos .. -1]
+          raise  ScanError, "can not match: '" + text + "'"
+        end  # if
+
+      when :ARITH
+        case
+        when (text = ss.scan(/\)\)/))
+           @rex_tokens.push action { state = @states.pop(); [ :ArithmeticEnd ] }
+
+        when (text = ss.scan(/~/))
+           @rex_tokens.push action { [ :ARITHTILDE ] }
+
+        when (text = ss.scan(/!/))
+           @rex_tokens.push action { [ :ARITHBANG ] }
+
+        when (text = ss.scan(/*/))
+           @rex_tokens.push action { [ :ARITHTIMES ] }
+
+        when (text = ss.scan(///))
+           @rex_tokens.push action { [ :ARITHDIV ] }
+
+        when (text = ss.scan(/%/))
+           @rex_tokens.push action { [ :ARITHMOD ] }
+
+        when (text = ss.scan(/<</))
+           @rex_tokens.push action { [ :ARITHLSHIFT ] }
+
+        when (text = ss.scan(/>>/))
+           @rex_tokens.push action { [ :ARITHRSHIFT ] }
+
+        when (text = ss.scan(/</))
+           @rex_tokens.push action { [ :ARITHLT ] }
+
+        when (text = ss.scan(/<=/))
+           @rex_tokens.push action { [ :ARITHLE ] }
+
+        when (text = ss.scan(/>/))
+           @rex_tokens.push action { [ :ARITHGT ] }
+
+        when (text = ss.scan(/>=/))
+           @rex_tokens.push action { [ :ARITHGE ] }
+
+        when (text = ss.scan(/==/))
+           @rex_tokens.push action { [ :ARITHEQ ] }
+
+        when (text = ss.scan(/!=/))
+           @rex_tokens.push action { [ :ARITHNE ] }
+
+        when (text = ss.scan(/&/))
+           @rex_tokens.push action { [ :ARITHBITAND ] }
+
+        when (text = ss.scan(/^/))
+           @rex_tokens.push action { [ :ARITHBITXOR ] }
+
+        when (text = ss.scan(/|/))
+           @rex_tokens.push action { [ :ARITHBITOR ] }
+
+        when (text = ss.scan(/&&/))
+           @rex_tokens.push action { [ :ARITHLOGAND ] }
+
+        when (text = ss.scan(/||/))
+           @rex_tokens.push action { [ :ARITHLOGOR ] }
+
+        when (text = ss.scan(/?/))
+           @rex_tokens.push action { [ :ARITHQUESTION ] }
+
+        when (text = ss.scan(/:/))
+           @rex_tokens.push action { [ :ARITHCOLON ] }
+
+        when (text = ss.scan(/=/))
+           @rex_tokens.push action { [ :ARITHASSIGN ] }
+
+        when (text = ss.scan(/*=/))
+           @rex_tokens.push action { [ :ARITHASSIGNTIMES ] }
+
+        when (text = ss.scan(//=/))
+           @rex_tokens.push action { [ :ARITHASSIGNDIV ] }
+
+        when (text = ss.scan(/%=/))
+           @rex_tokens.push action { [ :ARITHASSIGNMOD ] }
+
+        when (text = ss.scan(/+=/))
+           @rex_tokens.push action { [ :ARITHASSIGNPLUS ] }
+
+        when (text = ss.scan(/-=/))
+           @rex_tokens.push action { [ :ARITHASSIGNMINUS ] }
+
+        when (text = ss.scan(/<<=/))
+           @rex_tokens.push action { [ :ARITHASSIGNLSHIFT ] }
+
+        when (text = ss.scan(/>>=/))
+           @rex_tokens.push action { [ :ARITHASSIGNRSHIFT ] }
+
+        when (text = ss.scan(/&=/))
+           @rex_tokens.push action { [ :ARITHASSIGNBITAND ] }
+
+        when (text = ss.scan(/^=/))
+           @rex_tokens.push action { [ :ARITHASSIGNBITXOR ] }
+
+        when (text = ss.scan(/|=/))
+           @rex_tokens.push action { [ :ARITHASSIGNBITOR ] }
+
+        when (text = ss.scan(/[0-9]*/))
+           @rex_tokens.push action { [ :ARITHINT, text.to_i ] }
+
         else
           text = ss.string[ss.pos .. -1]
           raise  ScanError, "can not match: '" + text + "'"
@@ -165,4 +283,7 @@ class ShellParser < Racc::Parser
     end  # until ss
   end  # def scan_evaluate
 
+  def scan_setup
+    @states = [ ]
+  end
 end # class

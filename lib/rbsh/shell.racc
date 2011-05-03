@@ -13,6 +13,19 @@ token  Case    Esac    While    Until    For
 token  Lbrace    Rbrace    Bang
 token  In
 
+token LParen RParen
+
+# Arithmetic
+token  ArithmeticStart  ArithmeticEnd
+token  ARITHINC  ARITHDEC  ARITHTILDE  ARITHBANG  ARITHTIMES  ARITHDIV  ARITHMOD
+token  ARITHPLUS  ARITHMINUS
+token  ARITHLSHIFT  ARITHRSHIFT  ARITHLT  ARITHLE  ARITHGT  ARITHGE  ARITHEQ  ARITHNE
+token  ARITHBITAND  ARITHBITXOR  ARITHBITOR  ARITHLOGAND  ARITHLOGOR  ARITHQUESTION  ARITHCOLON
+token  ARITHASSIGN  ARITHASSIGNTIMES  ARITHASSIGNDIV  ARITHASSIGNMOD
+token  ARITHASSIGNPLUS  ARITHASSIGNMINUS  ARITHASSIGNLSHIFT  ARITHASSIGNRSHIFT
+token  ARITHASSIGNBITAND  ARITHASSIGNBITXOR  ARITHASSIGNBITOR
+token  ARITHINT
+
 rule
 
 complete_command : list separator                       { result = Node::CompleteCommand.new(val.first, val.last) }
@@ -44,7 +57,7 @@ compound_command : brace_group                          { result = Node::Compoun
                  | while_clause                         { result = Node::CompoundCommand.new(val.first) }
                  | until_clause                         { result = Node::CompoundCommand.new(val.first) }
                  ;
-subshell         : '(' compound_list ')'                { result = Node::Subshell.new(val.first) }
+subshell         : LParen compound_list RParen          { result = Node::Subshell.new(val.first) }
                  ;
 compound_list    :              term                    { result = Node::CompoundList.new(nil, val[1], nil) }
                  | newline_list term                    { result = Node::CompoundList.new(val[0], val[1], nil) }
@@ -54,6 +67,7 @@ compound_list    :              term                    { result = Node::Compoun
 term             : term separator and_or                { result = Node::Term.new(val[0], val[1], val[2]) }
                  |                and_or                { result = Node::Term.new(nil, nil, val[0]) }
                  ;
+                 ;
 for_clause       : For name linebreak                            do_group { result = Node::For.new(val[1], nil, val[-1]) }
                  | For name linebreak in          sequential_sep do_group { result = Node::For.new(val[1], val[-2], val[-1]) }
                  | For name linebreak in wordlist sequential_sep do_group { result = Node::For.new(val[1], val[3], val[-2], val[-1]) }
@@ -62,12 +76,13 @@ name             : NAME        /* Apply rule 5 */                     { result =
                  ;
 in               : In          /* Apply rule 6 */
                  ;
-wordlist         : wordlist WORD                                      { result = Node::Wordlist.new(val.first, val.last) }
-                 |          WORD                                      { result = Node::Wordlist.new(nil, val.last) }
+wordlist         : wordlist word                                      { result = Node::Wordlist.new(val.first, val.last) }
+                 |          word                                      { result = Node::Wordlist.new(nil, val.last) }
                  ;
-case_clause      : Case WORD linebreak in linebreak case_list    Esac { result = Node::CaseClause.new(val[1], val[-1]) }
-                 | Case WORD linebreak in linebreak case_list_ns Esac { result = Node::CaseClause.new(val[1], val[-1]) }
-                 | Case WORD linebreak in linebreak              Esac { result = Node::CaseClause.new(val[1], nil) }
+word             : WORD                                               { result = Node::Word.new(val.first) }
+case_clause      : Case word linebreak in linebreak case_list    Esac { result = Node::CaseClause.new(val[1], val[-1]) }
+                 | Case word linebreak in linebreak case_list_ns Esac { result = Node::CaseClause.new(val[1], val[-1]) }
+                 | Case word linebreak in linebreak              Esac { result = Node::CaseClause.new(val[1], nil) }
                  ;
 case_list_ns     : case_list case_item_ns                             { result = Node::CaseListNs.new(val.first, val.last) }
                  |           case_item_ns                             { result = Node::CaseListNs.new(nil, val.last) }
@@ -75,18 +90,18 @@ case_list_ns     : case_list case_item_ns                             { result =
 case_list        : case_list case_item                                { result = Node::CaseList.new(val.first, val.last) }
                  |           case_item                                { result = Node::CaseList.new(nil, val.last) }
                  ;
-case_item_ns     :     pattern ')'               linebreak            { result = Node::CaseItemNs.new(val[0], nil) }
-                 |     pattern ')' compound_list linebreak            { result = Node::CaseItemNs.new(val[0], val[2]) }
-                 | '(' pattern ')'               linebreak            { result = Node::CaseItemNs.new(val[1], nil) }
-                 | '(' pattern ')' compound_list linebreak            { result = Node::CaseItemNs.new(val[1], val[3]) }
+case_item_ns     :        pattern RParen               linebreak      { result = Node::CaseItemNs.new(val[0], nil) }
+                 |        pattern RParen compound_list linebreak      { result = Node::CaseItemNs.new(val[0], val[2]) }
+                 | LParen pattern RParen               linebreak      { result = Node::CaseItemNs.new(val[1], nil) }
+                 | LParen pattern RParen compound_list linebreak      { result = Node::CaseItemNs.new(val[1], val[3]) }
+                 
+case_item        :        pattern RParen linebreak     DSEMI linebreak { result = Node::CaseItem.new(val[0], nil) }
+                 |        pattern RParen compound_list DSEMI linebreak { result = Node::CaseItem.new(val[0], val[2]) }
+                 | LParen pattern RParen linebreak     DSEMI linebreak { result = Node::CaseItem.new(val[1], nil) }
+                 | LParen pattern RParen compound_list DSEMI linebreak { result = Node::CaseItem.new(val[1], val[3]) }
                  ;
-case_item        :     pattern ')' linebreak     DSEMI linebreak      { result = Node::CaseItem.new(val[0], nil) }
-                 |     pattern ')' compound_list DSEMI linebreak      { result = Node::CaseItem.new(val[0], val[2]) }
-                 | '(' pattern ')' linebreak     DSEMI linebreak      { result = Node::CaseItem.new(val[1], nil) }
-                 | '(' pattern ')' compound_list DSEMI linebreak      { result = Node::CaseItem.new(val[1], val[3]) }
-                 ;
-pattern          :             WORD  /* Apply rule 4 */               { result = Node::Pattern.new(nil, val.last) }
-                 | pattern '|' WORD  /* Do not apply rule 4 */        { result = Node::Pattern.new(val.first, val.last) }
+pattern          :             word  /* Apply rule 4 */               { result = Node::Pattern.new(nil, val.last) }
+                 | pattern '|' word  /* Do not apply rule 4 */        { result = Node::Pattern.new(val.first, val.last) }
                  ;
 if_clause        : If compound_list Then compound_list else_part Fi   { result = Node::IfClause.new(val[1], val[3], val[4]) }
                  | If compound_list Then compound_list           Fi   { result = Node::IfClause.new(val[1], val[3], nil) }
@@ -98,7 +113,7 @@ while_clause     : While compound_list do_group                       { result =
                  ;
 until_clause     : Until compound_list do_group                       { result = Node::UntilClause.new(val[1]) }
                  ;
-function_definition : fname '(' ')' linebreak function_body           { result = Node::FunctionDefinition.new(val.first, val.last) }
+function_definition : fname LParen RParen linebreak function_body     { result = Node::FunctionDefinition.new(val.first, val.last) }
                  ;
 function_body    : compound_command                /* Apply rule 9 */ { result = Node::FunctionBody.new(val.first, nil) }
                  | compound_command redirect_list  /* Apply rule 9 */ { result = Node::FunctionBody.new(val.first, val.last) }
@@ -115,9 +130,9 @@ simple_command   : cmd_prefix cmd_word cmd_suffix  { result = Node::SimpleComman
                  | cmd_name cmd_suffix             { result = Node::SimpleCommand.new(nil, val[0], val[1]) }
                  | cmd_name                        { result = Node::SimpleCommand.new(nil, val[0], nil) }
                  ;
-cmd_name         : WORD    /* Apply rule 7a */     { result = Node::CmdName.new(val.first) }
+cmd_name         : word    /* Apply rule 7a */     { result = Node::CmdName.new(val.first) }
                  ;
-cmd_word         : WORD    /* Apply rule 7b */     { result = Node::CmdWord.new(val.first) }
+cmd_word         : word    /* Apply rule 7b */     { result = Node::CmdWord.new(val.first) }
                  ;
 cmd_prefix       :            io_redirect          { result = Node::CmdPrefix.new(nil, val[0], nil) }
                  | cmd_prefix io_redirect          { result = Node::CmdPrefix.new(val[0], val[1], nil) }
@@ -126,8 +141,8 @@ cmd_prefix       :            io_redirect          { result = Node::CmdPrefix.ne
                  ;
 cmd_suffix       :            io_redirect          { result = Node::CmdSuffix.new(nil, val[0], nil) }
                  | cmd_suffix io_redirect          { result = Node::CmdSuffix.new(val[0], val[1], nil) }
-                 |            WORD                 { result = Node::CmdSuffix.new(nil, nil, val[0]) }
-                 | cmd_suffix WORD                 { result = Node::CmdSuffix.new(val[0], nil, val[1]) }
+                 |            word                 { result = Node::CmdSuffix.new(nil, nil, val[0]) }
+                 | cmd_suffix word                 { result = Node::CmdSuffix.new(val[0], nil, val[1]) }
                  ;
 redirect_list    :               io_redirect       { result = Node::RedirectList.new(nil, val.last) }
                  | redirect_list io_redirect       { result = Node::RedirectList.new(val.first, val.last) }
@@ -145,12 +160,12 @@ io_file          : '<'       filename              { result = Node::IoFile.new(v
                  | LESSGREAT filename              { result = Node::IoFile.new(val.first, val.last) }
                  | CLOBBER   filename              { result = Node::IoFile.new(val.first, val.last) }
                  ;
-filename         : WORD      /* Apply rule 2 */    { result = Node::Filename.new(val.first) }
+filename         : word      /* Apply rule 2 */    { result = Node::Filename.new(val.first) }
                  ;
 io_here          : DLESS     here_end              { result = Node::IoHere.new(val.first, val.last) }
                  | DLESSDASH here_end              { result = Node::IoHere.new(val.first, val.last) }
                  ;
-here_end         : WORD      /* Apply rule 3 */    { result = Node::HereEnd.new(val.first) }
+here_end         : word      /* Apply rule 3 */    { result = Node::HereEnd.new(val.first) }
                  ;
 newline_list     :              NEWLINE            { result = Node::NewlineList.new(nil) }
                  | newline_list NEWLINE            { result = Node::NewlineList.new(val.first) }
@@ -167,6 +182,45 @@ separator        : separator_op linebreak          { result = Node::Separator.ne
 sequential_sep   : ';' linebreak                   { result = Node::SequentialSep.new(nil) }
                  | newline_list                    { result = Node::SequentialSep.new(val.first) }
                  ;
+
+  # Arithmetic expressions
+arithmetic_expansion : ArithmeticStart aexpr ArithmeticEnd { result = Node::ArithmeticExpansion.new(val[3]) }
+aexpr            : LParen aexpr LParen             { result = Node::ArithmeticGroup.new(val.first) }
+aexpr            : ARITHPLUS aexpr                 { result = Node::ArithmeticUnaryPlus.new(val.first) }
+aexpr            : ARITHMINUS aexpr                { result = Node::ArithmeticUnaryMinus.new(val.first) }
+aexpr            : ARITHTILDE aexpr                { result = Node::ArithmeticBitwiseNot.new(val.first) }
+aexpr            : ARITHBANG aexpr                 { result = Node::ArithmeticLogicalNot.new(val.first) }
+aexpr            : aexpr ARITHTIMES aexpr          { result = Node::ArithmeticTimes.new(val.first, val.last) }
+aexpr            : aexpr ARITHDIV aexpr            { result = Node::ArithmeticDiv.new(val.first, val.last) }
+aexpr            : aexpr ARITHMOD aexpr            { result = Node::ArithmeticMod.new(val.first, val.last) }
+aexpr            : aexpr ARITHPLUS aexpr           { result = Node::ArithmeticPlus.new(val.first, val.last) }
+aexpr            : aexpr ARITHMINUS aexpr          { result = Node::ArithmeticMinus.new(val.first, val.last) }
+aexpr            : aexpr ARITHLSHIFT aexpr         { result = Node::ArithmeticLeftShift.new(val.first, val.last) }
+aexpr            : aexpr ARITHRSHIFT aexpr         { result = Node::ArithmeticRightShift.new(val.first, val.last) }
+aexpr            : aexpr ARITHLT aexpr             { result = Node::ArithmeticLess.new(val.first, val.last) }
+aexpr            : aexpr ARITHLE aexpr             { result = Node::ArithmeticLessOrEqual.new(val.first, val.last) }
+aexpr            : aexpr ARITHGT aexpr             { result = Node::ArithmeticGreater.new(val.first, val.last) }
+aexpr            : aexpr ARITHGE aexpr             { result = Node::ArithmeticGreaterOrEqual.new(val.first, val.last) }
+aexpr            : aexpr ARITHEQ aexpr             { result = Node::ArithmeticEqual.new(val.first, val.last) }
+aexpr            : aexpr ARITHNE aexpr             { result = Node::ArithmeticNotEqual.new(val.first, val.last) }
+aexpr            : aexpr ARITHBITAND aexpr         { result = Node::ArithmeticBitwiseAnd.new(val.first, val.last) }
+aexpr            : aexpr ARITHBITXOR aexpr         { result = Node::ArithmeticBitwiseXor.new(val.first, val.last) }
+aexpr            : aexpr ARITHBITOR aexpr          { result = Node::ArithmeticBitwiseOr.new(val.first, val.last) }
+aexpr            : aexpr ARITHLOGAND aexpr         { result = Node::ArithmeticLogicalAnd.new(val.first, val.last) }
+aexpr            : aexpr ARITHLOGOR aexpr          { result = Node::ArithmeticLogicalOr.new(val.first, val.last) }
+aexpr            : aexpr ARITHQUESTION aexpr ARITHCOLON aexpr { result = Node::ArithmeticTernary.new(val[0], val[1], val[2]) }
+aexpr            : aexpr ARITHASSIGN aexpr         { result = Node::ArithmeticAssign.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNTIMES aexpr    { result = Node::ArithmeticAssignTimes.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNDIV aexpr      { result = Node::ArithmeticAssignDiv.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNMOD aexpr      { result = Node::ArithmeticAssignMod.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNPLUS aexpr     { result = Node::ArithmeticAssignPlus.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNMINUS aexpr    { result = Node::ArithmeticAssignMinus.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNLSHIFT aexpr   { result = Node::ArithmeticAssignLeftShift.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNRSHIFT aexpr   { result = Node::ArithmeticAssignRightShift.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNBITAND aexpr   { result = Node::ArithmeticAssignBitwiseAnd.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNBITXOR aexpr   { result = Node::ArithmeticAssignBitwiseXor.new(val.first, val.last) }
+aexpr            : aexpr ARITHASSIGNBITOR aexpr    { result = Node::ArithmeticAssignBitwiseOr.new(val.first, val.last) }
+aexpr            : ARITHINT                        { result = Node::ArithmeticInteger.new(val.first) }
 
 end
 
