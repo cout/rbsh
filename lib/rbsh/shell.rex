@@ -13,9 +13,11 @@ rule
   :ARITH \)\)        { state = @states.pop(); [ :ArithmeticEnd ] }
   :ARITH    ~        { [ :ARITHTILDE ] }
   :ARITH    !        { [ :ARITHBANG ] }
-  :ARITH    *        { [ :ARITHTIMES ] }
-  :ARITH    /        { [ :ARITHDIV ] }
+  :ARITH    \*       { [ :ARITHTIMES ] }
+  :ARITH    \/       { [ :ARITHDIV ] }
   :ARITH    %        { [ :ARITHMOD ] }
+  :ARITH    \+       { [ :ARITHPLUS ] }
+  :ARITH    -        { [ :ARITHMINUS ] }
   :ARITH    <<       { [ :ARITHLSHIFT ] }
   :ARITH    >>       { [ :ARITHRSHIFT ] }
   :ARITH    <        { [ :ARITHLT ] }
@@ -26,22 +28,22 @@ rule
   :ARITH    !=       { [ :ARITHNE ] }
   :ARITH    &        { [ :ARITHBITAND ] }
   :ARITH    ^        { [ :ARITHBITXOR ] }
-  :ARITH    |        { [ :ARITHBITOR ] }
+  :ARITH    \|       { [ :ARITHBITOR ] }
   :ARITH    &&       { [ :ARITHLOGAND ] }
-  :ARITH    ||       { [ :ARITHLOGOR ] }
-  :ARITH    ?        { [ :ARITHQUESTION ] }
+  :ARITH    \|\|     { [ :ARITHLOGOR ] }
+  :ARITH    \?       { [ :ARITHQUESTION ] }
   :ARITH    :        { [ :ARITHCOLON ] }
   :ARITH    =        { [ :ARITHASSIGN ] }
-  :ARITH    *=       { [ :ARITHASSIGNTIMES ] }
-  :ARITH    /=       { [ :ARITHASSIGNDIV ] }
+  :ARITH    \*=      { [ :ARITHASSIGNTIMES ] }
+  :ARITH    \/=      { [ :ARITHASSIGNDIV ] }
   :ARITH    %=       { [ :ARITHASSIGNMOD ] }
-  :ARITH    +=       { [ :ARITHASSIGNPLUS ] }
+  :ARITH    \+=      { [ :ARITHASSIGNPLUS ] }
   :ARITH    -=       { [ :ARITHASSIGNMINUS ] }
   :ARITH    <<=      { [ :ARITHASSIGNLSHIFT ] }
   :ARITH    >>=      { [ :ARITHASSIGNRSHIFT ] }
   :ARITH    &=       { [ :ARITHASSIGNBITAND ] }
   :ARITH    ^=       { [ :ARITHASSIGNBITXOR ] }
-  :ARITH    |=       { [ :ARITHASSIGNBITOR ] }
+  :ARITH    '|='     { [ :ARITHASSIGNBITOR ] }
   :ARITH    {DIGIT}* { [ :ARITHINT, text.to_i ] }
 
   {WHITESPACE}       # no action

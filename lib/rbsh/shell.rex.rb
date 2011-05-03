@@ -182,14 +182,20 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/!/))
            @rex_tokens.push action { [ :ARITHBANG ] }
 
-        when (text = ss.scan(/*/))
+        when (text = ss.scan(/\*/))
            @rex_tokens.push action { [ :ARITHTIMES ] }
 
-        when (text = ss.scan(///))
+        when (text = ss.scan(/\//))
            @rex_tokens.push action { [ :ARITHDIV ] }
 
         when (text = ss.scan(/%/))
            @rex_tokens.push action { [ :ARITHMOD ] }
+
+        when (text = ss.scan(/\+/))
+           @rex_tokens.push action { [ :ARITHPLUS ] }
+
+        when (text = ss.scan(/-/))
+           @rex_tokens.push action { [ :ARITHMINUS ] }
 
         when (text = ss.scan(/<</))
            @rex_tokens.push action { [ :ARITHLSHIFT ] }
@@ -221,16 +227,16 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/^/))
            @rex_tokens.push action { [ :ARITHBITXOR ] }
 
-        when (text = ss.scan(/|/))
+        when (text = ss.scan(/\|/))
            @rex_tokens.push action { [ :ARITHBITOR ] }
 
         when (text = ss.scan(/&&/))
            @rex_tokens.push action { [ :ARITHLOGAND ] }
 
-        when (text = ss.scan(/||/))
+        when (text = ss.scan(/\|\|/))
            @rex_tokens.push action { [ :ARITHLOGOR ] }
 
-        when (text = ss.scan(/?/))
+        when (text = ss.scan(/\?/))
            @rex_tokens.push action { [ :ARITHQUESTION ] }
 
         when (text = ss.scan(/:/))
@@ -239,16 +245,16 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/=/))
            @rex_tokens.push action { [ :ARITHASSIGN ] }
 
-        when (text = ss.scan(/*=/))
+        when (text = ss.scan(/\*=/))
            @rex_tokens.push action { [ :ARITHASSIGNTIMES ] }
 
-        when (text = ss.scan(//=/))
+        when (text = ss.scan(/\/=/))
            @rex_tokens.push action { [ :ARITHASSIGNDIV ] }
 
         when (text = ss.scan(/%=/))
            @rex_tokens.push action { [ :ARITHASSIGNMOD ] }
 
-        when (text = ss.scan(/+=/))
+        when (text = ss.scan(/\+=/))
            @rex_tokens.push action { [ :ARITHASSIGNPLUS ] }
 
         when (text = ss.scan(/-=/))
@@ -266,7 +272,7 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/^=/))
            @rex_tokens.push action { [ :ARITHASSIGNBITXOR ] }
 
-        when (text = ss.scan(/|=/))
+        when (text = ss.scan(/'|='/))
            @rex_tokens.push action { [ :ARITHASSIGNBITOR ] }
 
         when (text = ss.scan(/[0-9]*/))
