@@ -17,7 +17,7 @@ token LParen RParen
 
 # Arithmetic
 token  ArithmeticStart  ArithmeticEnd
-token  ARITHINC  ARITHDEC  ARITHTILDE  ARITHBANG  ARITHTIMES  ARITHDIV  ARITHMOD
+token  ARITHTILDE  ARITHBANG  ARITHTIMES  ARITHDIV  ARITHMOD
 token  ARITHPLUS  ARITHMINUS
 token  ARITHLSHIFT  ARITHRSHIFT  ARITHLT  ARITHLE  ARITHGT  ARITHGE  ARITHEQ  ARITHNE
 token  ARITHBITAND  ARITHBITXOR  ARITHBITOR  ARITHLOGAND  ARITHLOGOR  ARITHQUESTION  ARITHCOLON
@@ -25,6 +25,18 @@ token  ARITHASSIGN  ARITHASSIGNTIMES  ARITHASSIGNDIV  ARITHASSIGNMOD
 token  ARITHASSIGNPLUS  ARITHASSIGNMINUS  ARITHASSIGNLSHIFT  ARITHASSIGNRSHIFT
 token  ARITHASSIGNBITAND  ARITHASSIGNBITXOR  ARITHASSIGNBITOR
 token  ARITHINT
+
+prechigh
+right ARITHPLUS ARITHMINUS
+right ARITHTILDE
+right ARITHBANG
+left ARITHTIMES ARITHDIV ARITHMOD
+left ARITHPLUS ARITHMINUS
+left ARITHLSHIFT ARITHRSHIFT
+left ARITHLT ARITHLE ARITHGT ARITHGE ARITHEQ ARITHNE
+left ARITHBITAND  ARITHBITXOR  ARITHBITOR  ARITHLOGAND  ARITHLOGOR  ARITHQUESTION  ARITHCOLON
+left ARITHASSIGN  ARITHASSIGNTIMES  ARITHASSIGNDIV  ARITHASSIGNMOD ARITHASSIGNPLUS  ARITHASSIGNMINUS  ARITHASSIGNLSHIFT  ARITHASSIGNRSHIFT ARITHASSIGNBITAND  ARITHASSIGNBITXOR  ARITHASSIGNBITOR
+preclow
 
 rule
 
@@ -133,6 +145,7 @@ simple_command   : cmd_prefix cmd_word cmd_suffix  { result = Node::SimpleComman
 cmd_name         : word    /* Apply rule 7a */     { result = Node::CmdName.new(val.first) }
                  ;
 cmd_word         : word    /* Apply rule 7b */     { result = Node::CmdWord.new(val.first) }
+                 | arithmetic_expansion                 { result = Node::Word.new(val.first) }
                  ;
 cmd_prefix       :            io_redirect          { result = Node::CmdPrefix.new(nil, val[0], nil) }
                  | cmd_prefix io_redirect          { result = Node::CmdPrefix.new(val[0], val[1], nil) }
@@ -186,41 +199,41 @@ sequential_sep   : ';' linebreak                   { result = Node::SequentialSe
   # Arithmetic expressions
 arithmetic_expansion : ArithmeticStart aexpr ArithmeticEnd { result = Node::ArithmeticExpansion.new(val[3]) }
 aexpr            : LParen aexpr LParen             { result = Node::ArithmeticGroup.new(val.first) }
-aexpr            : ARITHPLUS aexpr                 { result = Node::ArithmeticUnaryPlus.new(val.first) }
-aexpr            : ARITHMINUS aexpr                { result = Node::ArithmeticUnaryMinus.new(val.first) }
-aexpr            : ARITHTILDE aexpr                { result = Node::ArithmeticBitwiseNot.new(val.first) }
-aexpr            : ARITHBANG aexpr                 { result = Node::ArithmeticLogicalNot.new(val.first) }
-aexpr            : aexpr ARITHTIMES aexpr          { result = Node::ArithmeticTimes.new(val.first, val.last) }
-aexpr            : aexpr ARITHDIV aexpr            { result = Node::ArithmeticDiv.new(val.first, val.last) }
-aexpr            : aexpr ARITHMOD aexpr            { result = Node::ArithmeticMod.new(val.first, val.last) }
-aexpr            : aexpr ARITHPLUS aexpr           { result = Node::ArithmeticPlus.new(val.first, val.last) }
-aexpr            : aexpr ARITHMINUS aexpr          { result = Node::ArithmeticMinus.new(val.first, val.last) }
-aexpr            : aexpr ARITHLSHIFT aexpr         { result = Node::ArithmeticLeftShift.new(val.first, val.last) }
-aexpr            : aexpr ARITHRSHIFT aexpr         { result = Node::ArithmeticRightShift.new(val.first, val.last) }
-aexpr            : aexpr ARITHLT aexpr             { result = Node::ArithmeticLess.new(val.first, val.last) }
-aexpr            : aexpr ARITHLE aexpr             { result = Node::ArithmeticLessOrEqual.new(val.first, val.last) }
-aexpr            : aexpr ARITHGT aexpr             { result = Node::ArithmeticGreater.new(val.first, val.last) }
-aexpr            : aexpr ARITHGE aexpr             { result = Node::ArithmeticGreaterOrEqual.new(val.first, val.last) }
-aexpr            : aexpr ARITHEQ aexpr             { result = Node::ArithmeticEqual.new(val.first, val.last) }
-aexpr            : aexpr ARITHNE aexpr             { result = Node::ArithmeticNotEqual.new(val.first, val.last) }
-aexpr            : aexpr ARITHBITAND aexpr         { result = Node::ArithmeticBitwiseAnd.new(val.first, val.last) }
-aexpr            : aexpr ARITHBITXOR aexpr         { result = Node::ArithmeticBitwiseXor.new(val.first, val.last) }
-aexpr            : aexpr ARITHBITOR aexpr          { result = Node::ArithmeticBitwiseOr.new(val.first, val.last) }
-aexpr            : aexpr ARITHLOGAND aexpr         { result = Node::ArithmeticLogicalAnd.new(val.first, val.last) }
-aexpr            : aexpr ARITHLOGOR aexpr          { result = Node::ArithmeticLogicalOr.new(val.first, val.last) }
-aexpr            : aexpr ARITHQUESTION aexpr ARITHCOLON aexpr { result = Node::ArithmeticTernary.new(val[0], val[1], val[2]) }
-aexpr            : aexpr ARITHASSIGN aexpr         { result = Node::ArithmeticAssign.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNTIMES aexpr    { result = Node::ArithmeticAssignTimes.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNDIV aexpr      { result = Node::ArithmeticAssignDiv.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNMOD aexpr      { result = Node::ArithmeticAssignMod.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNPLUS aexpr     { result = Node::ArithmeticAssignPlus.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNMINUS aexpr    { result = Node::ArithmeticAssignMinus.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNLSHIFT aexpr   { result = Node::ArithmeticAssignLeftShift.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNRSHIFT aexpr   { result = Node::ArithmeticAssignRightShift.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNBITAND aexpr   { result = Node::ArithmeticAssignBitwiseAnd.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNBITXOR aexpr   { result = Node::ArithmeticAssignBitwiseXor.new(val.first, val.last) }
-aexpr            : aexpr ARITHASSIGNBITOR aexpr    { result = Node::ArithmeticAssignBitwiseOr.new(val.first, val.last) }
-aexpr            : ARITHINT                        { result = Node::ArithmeticInteger.new(val.first) }
+                 | ARITHPLUS aexpr                 { result = Node::ArithmeticUnaryPlus.new(val.first) }
+                 | ARITHMINUS aexpr                { result = Node::ArithmeticUnaryMinus.new(val.first) }
+                 | ARITHTILDE aexpr                { result = Node::ArithmeticBitwiseNot.new(val.first) }
+                 | ARITHBANG aexpr                 { result = Node::ArithmeticLogicalNot.new(val.first) }
+                 | aexpr ARITHTIMES aexpr          { result = Node::ArithmeticTimes.new(val.first, val.last) }
+                 | aexpr ARITHDIV aexpr            { result = Node::ArithmeticDiv.new(val.first, val.last) }
+                 | aexpr ARITHMOD aexpr            { result = Node::ArithmeticMod.new(val.first, val.last) }
+                 | aexpr ARITHPLUS aexpr           { result = Node::ArithmeticPlus.new(val.first, val.last) }
+                 | aexpr ARITHMINUS aexpr          { result = Node::ArithmeticMinus.new(val.first, val.last) }
+                 | aexpr ARITHLSHIFT aexpr         { result = Node::ArithmeticLeftShift.new(val.first, val.last) }
+                 | aexpr ARITHRSHIFT aexpr         { result = Node::ArithmeticRightShift.new(val.first, val.last) }
+                 | aexpr ARITHLT aexpr             { result = Node::ArithmeticLess.new(val.first, val.last) }
+                 | aexpr ARITHLE aexpr             { result = Node::ArithmeticLessOrEqual.new(val.first, val.last) }
+                 | aexpr ARITHGT aexpr             { result = Node::ArithmeticGreater.new(val.first, val.last) }
+                 | aexpr ARITHGE aexpr             { result = Node::ArithmeticGreaterOrEqual.new(val.first, val.last) }
+                 | aexpr ARITHEQ aexpr             { result = Node::ArithmeticEqual.new(val.first, val.last) }
+                 | aexpr ARITHNE aexpr             { result = Node::ArithmeticNotEqual.new(val.first, val.last) }
+                 | aexpr ARITHBITAND aexpr         { result = Node::ArithmeticBitwiseAnd.new(val.first, val.last) }
+                 | aexpr ARITHBITXOR aexpr         { result = Node::ArithmeticBitwiseXor.new(val.first, val.last) }
+                 | aexpr ARITHBITOR aexpr          { result = Node::ArithmeticBitwiseOr.new(val.first, val.last) }
+                 | aexpr ARITHLOGAND aexpr         { result = Node::ArithmeticLogicalAnd.new(val.first, val.last) }
+                 | aexpr ARITHLOGOR aexpr          { result = Node::ArithmeticLogicalOr.new(val.first, val.last) }
+                 | aexpr ARITHQUESTION aexpr ARITHCOLON aexpr { result = Node::ArithmeticTernary.new(val[0], val[1], val[2]) }
+                 | aexpr ARITHASSIGN aexpr         { result = Node::ArithmeticAssign.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNTIMES aexpr    { result = Node::ArithmeticAssignTimes.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNDIV aexpr      { result = Node::ArithmeticAssignDiv.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNMOD aexpr      { result = Node::ArithmeticAssignMod.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNPLUS aexpr     { result = Node::ArithmeticAssignPlus.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNMINUS aexpr    { result = Node::ArithmeticAssignMinus.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNLSHIFT aexpr   { result = Node::ArithmeticAssignLeftShift.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNRSHIFT aexpr   { result = Node::ArithmeticAssignRightShift.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNBITAND aexpr   { result = Node::ArithmeticAssignBitwiseAnd.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNBITXOR aexpr   { result = Node::ArithmeticAssignBitwiseXor.new(val.first, val.last) }
+                 | aexpr ARITHASSIGNBITOR aexpr    { result = Node::ArithmeticAssignBitwiseOr.new(val.first, val.last) }
+                 | ARITHINT                        { result = Node::ArithmeticInteger.new(val.first) }
 
 end
 
