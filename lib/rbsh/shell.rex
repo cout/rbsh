@@ -46,6 +46,10 @@ rule
   :ARITH    '|='     { [ :ARITHASSIGNBITOR ] }
   :ARITH    {DIGIT}* { [ :ARITHINT, text.to_i ] }
 
+  # Parameter expressions
+  \$\{               { @states.push(state); state = :PARAM; [ :ParamStart ] }
+  :PARAM \}          { state = @states.pop(); [ :ParamEnd ] }
+
   {WHITESPACE}       # no action
   \#.*{NEWLINE}      # no action
   {WORD}={WORD}      { [:ASSIGNMENT_WORD, text] }
@@ -84,6 +88,8 @@ rule
 
   \(                 { [ :LPAREN ] }
   \)                 { [ :RPAREN ] }
+  \$\$               { [ :DOLLARDOLLAR ] }
+  \$                 { [ :DOLLAR ] }
   
 inner
 

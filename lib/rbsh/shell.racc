@@ -13,7 +13,7 @@ token  Case    Esac    While    Until    For
 token  Lbrace    Rbrace    Bang
 token  In
 
-token LParen RParen
+token LPAREN RPAREN DOLLAR DOLLARDOLLAR
 
 # Arithmetic
 token  ArithmeticStart  ArithmeticEnd
@@ -25,6 +25,9 @@ token  ARITHASSIGN  ARITHASSIGNTIMES  ARITHASSIGNDIV  ARITHASSIGNMOD
 token  ARITHASSIGNPLUS  ARITHASSIGNMINUS  ARITHASSIGNLSHIFT  ARITHASSIGNRSHIFT
 token  ARITHASSIGNBITAND  ARITHASSIGNBITXOR  ARITHASSIGNBITOR
 token  ARITHINT
+
+# Parameters
+token ParamStart ParamEnd
 
 prechigh
 right ARITHPLUS ARITHMINUS
@@ -69,7 +72,7 @@ compound_command : brace_group                          { result = Node::Compoun
                  | while_clause                         { result = Node::CompoundCommand.new(val.first) }
                  | until_clause                         { result = Node::CompoundCommand.new(val.first) }
                  ;
-subshell         : LParen compound_list RParen          { result = Node::Subshell.new(val.first) }
+subshell         : LPAREN compound_list RPAREN          { result = Node::Subshell.new(val.first) }
                  ;
 compound_list    :              term                    { result = Node::CompoundList.new(nil, val[1], nil) }
                  | newline_list term                    { result = Node::CompoundList.new(val[0], val[1], nil) }
@@ -93,6 +96,7 @@ wordlist         : wordlist word                                      { result =
                  ;
 word             : WORD                                               { result = Node::Word.new(val.first) }
                  | arithmetic_expansion                               { result = Node::Word.new(val.first) }
+                 | parameter_expansion                                { result = Node::Word.new(val.first) }
 case_clause      : Case word linebreak in linebreak case_list    Esac { result = Node::CaseClause.new(val[1], val[-1]) }
                  | Case word linebreak in linebreak case_list_ns Esac { result = Node::CaseClause.new(val[1], val[-1]) }
                  | Case word linebreak in linebreak              Esac { result = Node::CaseClause.new(val[1], nil) }
@@ -103,15 +107,15 @@ case_list_ns     : case_list case_item_ns                             { result =
 case_list        : case_list case_item                                { result = Node::CaseList.new(val.first, val.last) }
                  |           case_item                                { result = Node::CaseList.new(nil, val.last) }
                  ;
-case_item_ns     :        pattern RParen               linebreak      { result = Node::CaseItemNs.new(val[0], nil) }
-                 |        pattern RParen compound_list linebreak      { result = Node::CaseItemNs.new(val[0], val[2]) }
-                 | LParen pattern RParen               linebreak      { result = Node::CaseItemNs.new(val[1], nil) }
-                 | LParen pattern RParen compound_list linebreak      { result = Node::CaseItemNs.new(val[1], val[3]) }
+case_item_ns     :        pattern RPAREN               linebreak      { result = Node::CaseItemNs.new(val[0], nil) }
+                 |        pattern RPAREN compound_list linebreak      { result = Node::CaseItemNs.new(val[0], val[2]) }
+                 | LPAREN pattern RPAREN               linebreak      { result = Node::CaseItemNs.new(val[1], nil) }
+                 | LPAREN pattern RPAREN compound_list linebreak      { result = Node::CaseItemNs.new(val[1], val[3]) }
                  
-case_item        :        pattern RParen linebreak     DSEMI linebreak { result = Node::CaseItem.new(val[0], nil) }
-                 |        pattern RParen compound_list DSEMI linebreak { result = Node::CaseItem.new(val[0], val[2]) }
-                 | LParen pattern RParen linebreak     DSEMI linebreak { result = Node::CaseItem.new(val[1], nil) }
-                 | LParen pattern RParen compound_list DSEMI linebreak { result = Node::CaseItem.new(val[1], val[3]) }
+case_item        :        pattern RPAREN linebreak     DSEMI linebreak { result = Node::CaseItem.new(val[0], nil) }
+                 |        pattern RPAREN compound_list DSEMI linebreak { result = Node::CaseItem.new(val[0], val[2]) }
+                 | LPAREN pattern RPAREN linebreak     DSEMI linebreak { result = Node::CaseItem.new(val[1], nil) }
+                 | LPAREN pattern RPAREN compound_list DSEMI linebreak { result = Node::CaseItem.new(val[1], val[3]) }
                  ;
 pattern          :             word  /* Apply rule 4 */               { result = Node::Pattern.new(nil, val.last) }
                  | pattern '|' word  /* Do not apply rule 4 */        { result = Node::Pattern.new(val.first, val.last) }
@@ -126,7 +130,7 @@ while_clause     : While compound_list do_group                       { result =
                  ;
 until_clause     : Until compound_list do_group                       { result = Node::UntilClause.new(val[1]) }
                  ;
-function_definition : fname LParen RParen linebreak function_body     { result = Node::FunctionDefinition.new(val.first, val.last) }
+function_definition : fname LPAREN RPAREN linebreak function_body     { result = Node::FunctionDefinition.new(val.first, val.last) }
                  ;
 function_body    : compound_command                /* Apply rule 9 */ { result = Node::FunctionBody.new(val.first, nil) }
                  | compound_command redirect_list  /* Apply rule 9 */ { result = Node::FunctionBody.new(val.first, val.last) }
@@ -196,9 +200,9 @@ sequential_sep   : ';' linebreak                   { result = Node::SequentialSe
                  | newline_list                    { result = Node::SequentialSep.new(val.first) }
                  ;
 
-  # Arithmetic expressions
+# Arithmetic expressions
 arithmetic_expansion : ArithmeticStart aexpr ArithmeticEnd { result = Node::ArithmeticExpansion.new(val[3]) }
-aexpr            : LParen aexpr LParen             { result = Node::ArithmeticGroup.new(val.first) }
+aexpr            : LPAREN aexpr LPAREN             { result = Node::ArithmeticGroup.new(val.first) }
                  | ARITHPLUS aexpr                 { result = Node::ArithmeticUnaryPlus.new(val.first) }
                  | ARITHMINUS aexpr                { result = Node::ArithmeticUnaryMinus.new(val.first) }
                  | ARITHTILDE aexpr                { result = Node::ArithmeticBitwiseNot.new(val.first) }
@@ -234,6 +238,14 @@ aexpr            : LParen aexpr LParen             { result = Node::ArithmeticGr
                  | aexpr ARITHASSIGNBITXOR aexpr   { result = Node::ArithmeticAssignBitwiseXor.new(val.first, val.last) }
                  | aexpr ARITHASSIGNBITOR aexpr    { result = Node::ArithmeticAssignBitwiseOr.new(val.first, val.last) }
                  | ARITHINT                        { result = Node::ArithmeticInteger.new(val.first) }
+
+# Parameter expansion
+parameter_expansion : ParamStart pexpr ParamEnd    { result = Node::ParameterExpansion.new(val[1]) }
+                 |    DOLLAR word                  { result = Node::ParameterExpansion.new(val[1]) }
+                 |    DOLLARDOLLAR                 { result = Node::ParameterExpansion.new(val[1]) }
+                 ;
+pexpr            : word                            { result = Node::ParameterName.new(val.first) }
+                 ;
 
 end
 

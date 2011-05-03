@@ -55,6 +55,9 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/\$\(\(/))
            @rex_tokens.push action { @states.push(state); state = :ARITH; [ :ArithmeticStart ] }
 
+        when (text = ss.scan(/\$\{/))
+           @rex_tokens.push action { @states.push(state); state = :PARAM; [ :ParamStart ] }
+
         when (text = ss.scan(/\s+/))
           ;
 
@@ -165,6 +168,12 @@ class ShellParser < Racc::Parser
 
         when (text = ss.scan(/\)/))
            @rex_tokens.push action { [ :RPAREN ] }
+
+        when (text = ss.scan(/\$\$/))
+           @rex_tokens.push action { [ :DOLLARDOLLAR ] }
+
+        when (text = ss.scan(/\$/))
+           @rex_tokens.push action { [ :DOLLAR ] }
 
         else
           text = ss.string[ss.pos .. -1]
@@ -277,6 +286,16 @@ class ShellParser < Racc::Parser
 
         when (text = ss.scan(/[0-9]*/))
            @rex_tokens.push action { [ :ARITHINT, text.to_i ] }
+
+        else
+          text = ss.string[ss.pos .. -1]
+          raise  ScanError, "can not match: '" + text + "'"
+        end  # if
+
+      when :PARAM
+        case
+        when (text = ss.scan(/\}/))
+           @rex_tokens.push action { state = @states.pop(); [ :ParamEnd ] }
 
         else
           text = ss.string[ss.pos .. -1]
