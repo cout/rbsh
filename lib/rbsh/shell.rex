@@ -4,7 +4,7 @@ macro
   WHITESPACE        \s+
   LETTER            [A-Za-z]
   DIGIT             [0-9]
-  WORD              [A-Za-z0-9][A-Za-z_0-9]* # TODO: posix doesn't allow numbers
+  WORD              [A-Za-z0-9:]([A-Za-z_0-9]|:)* # TODO: what constitutes a "word"?
   NEWLINE           \n
 
 rule
@@ -92,7 +92,7 @@ rule
   \$\$               { [ :DOLLARDOLLAR ] }
   \$                 { [ :DOLLAR ] }
   \&                 { [ :AMPERSAND ] }
-  \;                 { [ :SEMICOLON ] }
+  ;                  { [ :SEMICOLON ] }
   <                  { [ :LESS ] }
   >                  { [ :GREAT ] }
   \|                 { [ :PIPE ] }

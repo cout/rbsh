@@ -64,10 +64,10 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/\#.*\n/))
           ;
 
-        when (text = ss.scan(/[A-Za-z0-9][A-Za-z_0-9]*=[A-Za-z0-9][A-Za-z_0-9]*/))
+        when (text = ss.scan(/[A-Za-z0-9:]([A-Za-z_0-9]|:)*=[A-Za-z0-9:]([A-Za-z_0-9]|:)*/))
            @rex_tokens.push action { [:ASSIGNMENT_WORD, text] }
 
-        when (text = ss.scan(/[A-Za-z0-9][A-Za-z_0-9]*/))
+        when (text = ss.scan(/[A-Za-z0-9:]([A-Za-z_0-9]|:)*/))
            @rex_tokens.push action { [:WORD, text] }
 
         when (text = ss.scan(/".*"/))
@@ -178,7 +178,7 @@ class ShellParser < Racc::Parser
         when (text = ss.scan(/\&/))
            @rex_tokens.push action { [ :AMPERSAND ] }
 
-        when (text = ss.scan(/\;/))
+        when (text = ss.scan(/;/))
            @rex_tokens.push action { [ :SEMICOLON ] }
 
         when (text = ss.scan(/</))
